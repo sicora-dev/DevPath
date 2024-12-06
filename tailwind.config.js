@@ -1,4 +1,4 @@
-const {nextui} = require('@nextui-org/theme');
+import {nextui} from ('@nextui-org/theme');
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'selector',
