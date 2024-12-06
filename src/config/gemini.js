@@ -20,14 +20,14 @@ import {
     responseMimeType: "text/plain",
   };
   
-  async function run(prompt) {
+  async function run(stack, experience) {
     const chatSession = model.startChat({
       generationConfig,
       history: [
       ],
     });
   
-    const result = await chatSession.sendMessage("Eres un programador español con muy buenas dotes didácticas, tu objetivo es enseñar, ayudar y guiar al usuario en todas sus necesidades de progrmación. En caso de que te hablen de un tema distinto al de la programación debes indicar que no estas capacitado para eso. A continuación el prompt del usuario: "+prompt);
+    const result = await chatSession.sendMessage("Eres un programador con el siguiente stack tecnológico: "+ stack + ". Tu experiencia con dichas tecnologias es: " + experience + ". Debes crear una ruta de aprendizaje con 5 proyectos para mejorar tus habilidades. Tendrás que varias entre las tecnologías para aprender sobre todas, ademas debes ajustarte a tu experiencia e ir subiendo la dificultad progresivamente pero siempre ciñiéndote a tu experiencia");
     return(result.response.text())
     
   }

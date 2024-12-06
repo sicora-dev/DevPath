@@ -5,7 +5,8 @@ export const Context = createContext();
 
 const ContextProvider = (props) => {
 
-    const [input, setInput] = useState("");
+    const [stack, setStack] = useState("");
+    const [experience, setExperience] = useState("");
     const [recentPrompt, setRecentPrompt] = useState("");
     const [previousPrompts, setPreviousPrompts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -16,17 +17,19 @@ const ContextProvider = (props) => {
 
         setOutput("");
         setLoading(true);
-        const result = await run(input);
+        const result = await run(stack, experience);
         setOutput(result);
         setLoading(false);
-        setInput("");
+        setStack("");
         
 
     }
 
     const contextValue = {
-        input,
-        setInput,
+        stack,
+        setStack,
+        experience,
+        setExperience,
         recentPrompt,
         setRecentPrompt,
         previousPrompts,

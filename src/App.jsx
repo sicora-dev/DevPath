@@ -1,35 +1,41 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Context } from "./context/Context";
+import React, {useEffect, useState} from "react";
+import MainIAComp from "./components/MainIAComp";
+import { Switch } from "@nextui-org/switch";
+import { MoonIcon } from "./switch/MoonIcon";
+import { SunIcon } from "./switch/SunIcon";
+import Header from "./components/Header";
 
 const App = () => {
-  const {
-    input,
-    setInput,
-    recentPrompt,
-    setRecentPrompt,
-    previousPrompts,
-    setPreviousPrompts,
-    loading,
-    output,
-    onSent,
-  } = useContext(Context);
 
+  const [darkMode, setDarkMode] = useState(false);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setRecentPrompt(input);
-    setPreviousPrompts([...previousPrompts, input]);
-    onSent();
-  };
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   return (
     <>
-      <form onSubmit={handleClick}>
-        <input type="text" onChange={(e) => setInput(e.target.value)} value={input}/>
-        <button type="submit">Enviar</button>
-      </form>
-      {loading && <p>Loading...</p>}
-      <p id="output">{output}</p>
+      <Header />
+      <MainIAComp />
+      <div className="absolute bottom-5 right-5">
+        <Switch
+          defaultSelected
+          size="lg"
+          color="warning"
+          thumbIcon={({ isSelected, className }) =>
+            isSelected ? (
+              <SunIcon className={className} />
+            ) : (
+              <MoonIcon className={className} />
+            )
+          }
+          onClick={() => setDarkMode(!darkMode)}
+        ></Switch>
+      </div>
     </>
   );
 };
