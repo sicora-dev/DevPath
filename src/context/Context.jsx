@@ -7,6 +7,7 @@ const ContextProvider = (props) => {
 
     const [stack, setStack] = useState("");
     const [experience, setExperience] = useState("");
+    const [observations, setObservations] = useState("");
     const [recentPrompt, setRecentPrompt] = useState("");
     const [previousPrompts, setPreviousPrompts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const ContextProvider = (props) => {
 
         setOutput("");
         setLoading(true);
-        const result = await run(stack, experience);
+        const result = await run(stack, experience, observations);
         setOutput(result);
         setLoading(false);
         setStack("");
@@ -30,6 +31,8 @@ const ContextProvider = (props) => {
         setStack,
         experience,
         setExperience,
+        observations,
+        setObservations,
         recentPrompt,
         setRecentPrompt,
         previousPrompts,

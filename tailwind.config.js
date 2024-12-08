@@ -5,24 +5,28 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/toggle.js"
+    "./node_modules/@nextui-org/theme/dist/components/(button|card|divider|image|link|scroll-shadow|skeleton|toggle|ripple|spinner).js"
   ],
   theme: {
     extend: {
+      fontFamily: {
+        title: ["Syne", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+      },
       colors: {
         light: {
-          background: '#F9D07F', // Fondo principal
-          secondary: '#97B8AF', // Fondo secundario
-          text: '#2E292A', // Texto principal
-          heading: '#AE184A', // Títulos/destacados
-          highlight: '#E52D1F', // Highlights/acciones
+          background: '#F3EFF5', // Fondo principal
+          secondary: '#C9C9CE', // Fondo secundario
+          text: '#0D0A0B', // Texto principal
+          heading: '#4A9B2D', // Títulos/destacados (tono verde ligeramente más claro que el highlight)
+          highlight: '#72B01D', // Highlights/acciones
         },
         dark: {
-          background: '#2E292A', // Fondo principal
-          secondary: '#1C1A1B', // Fondo secundario
-          text: '#F9D07F', // Texto principal
-          heading: '#E52D1F', // Títulos/destacados
-          highlight: '#AE184A', // Highlights/acciones
+          background: '#0D0A0B', // Fondo principal
+          secondary: '#454955', // Fondo secundario
+          text: '#F3EFF5', // Texto principal
+          heading: '#5F9930', // Títulos/destacados (verde diferente para contraste en modo oscuro)
+          highlight: '#72B01D', // Highlights/acciones
         },
       },
     },
