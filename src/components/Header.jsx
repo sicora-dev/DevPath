@@ -53,7 +53,7 @@ const Header = () => {
           <button
             onClick={() => handleGithubClick()}
             className="rounded-xl p-2 border-light-highlight/30 dark:border-dark-highlight/30 border-2 hover:border-light-highlight
-            dark:hover:border-dark-highlight transition ease-in-out"
+            dark:hover:border-dark-highlight transition ease-in-out group"
           >
             <GithubIcon />
           </button>

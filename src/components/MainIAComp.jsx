@@ -201,7 +201,6 @@ const MainIAComp = () => {
           ),
         },
       };
-      console.log("hola");
       setOutputSections(sections);
       setOutputLoaded(true);
       // console.log("Output sections:", sections);
