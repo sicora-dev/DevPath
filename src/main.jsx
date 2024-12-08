@@ -8,5 +8,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 createRoot(document.getElementById('root')).render(
   <ContextProvider>
     <App />
+    <SpeedInsights />
   </ContextProvider>,
 )

@@ -12,6 +12,7 @@ import DOMPurify from "dompurify";
 import { CameraIcon } from "../photobutton/CameraIcon";
 import ProjectCarousel from "./ProjectCarousel";
 import ExampleProjectCarousel from "./ExampleProjectCarousel";
+import { Tooltip } from "react-tooltip";
 
 import ReactMarkdown from "react-markdown";
 import jsPDF from "jspdf";
@@ -22,8 +23,8 @@ const MainIAComp = () => {
   const {
     stack,
     setStack,
-    experience,
-    setExperience,
+    skill,
+    setSkill,
     observations,
     setObservations,
     recentPrompt,
@@ -162,7 +163,7 @@ const MainIAComp = () => {
     if (output) {
       // console.log("Raw output:", output); // Verificar el output inicial
       sessionStorage.setItem("output", output);
-      
+
       const sections = {
         intro: {
           title: extractTitle(
@@ -230,23 +231,56 @@ const MainIAComp = () => {
         <input
           id="stack"
           type="text"
+          required
+          data-tooltip-id="stack-tooltip"
+          data-tooltip-content="El stack ayuda a filtrar proyectos según las tecnologías que manejas"
           onChange={(e) => setStack(e.target.value)}
           value={stack}
-          className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary"
+          className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer"
+          placeholder="Ej: JavaScript"
+        />
+        <Tooltip
+          id="stack-tooltip"
+          className="peer-focus:hidden"
+          style={{
+            backgroundColor: "#333",
+            color: "white",
+            borderRadius: "6px",
+            padding: "10px",
+            fontSize: "14px",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+          }}
         />
         <label
-          htmlFor="experience"
+          htmlFor="skill"
           className="text-center text-light-highlight dark:text-dark-highlight font-bold"
         >
-          Experiencia
+          Habilidad
         </label>
         <input
-          id="experience"
+          id="skill"
           type="text"
-          onChange={(e) => setExperience(e.target.value)}
-          className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary"
-          value={experience}
+          title="" // evita el tooltip nativo
+          data-tooltip-id="skill-tooltip"
+          data-tooltip-content="La habilidad le sirve a la IA a sugerir proyectos más acordes a tu nivel"
+          required
+          onChange={(e) => setSkill(e.target.value)}
+          className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer"
+          value={skill}
+          placeholder="Ej: JavaScript-Medio"
         ></input>
+        <Tooltip
+          id="skill-tooltip"
+          className="peer-focus:hidden"
+          style={{
+            backgroundColor: "#333",
+            color: "white",
+            borderRadius: "6px",
+            padding: "10px",
+            fontSize: "14px",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+          }}
+        />
         <label
           htmlFor="experience"
           className="text-center text-light-highlight dark:text-dark-highlight font-bold"
@@ -256,10 +290,25 @@ const MainIAComp = () => {
         <input
           id="observations"
           type="text"
+          data-tooltip-id="obervations-tooltip"
+          data-tooltip-content="Las observaciones ayudan a la IA a personalizar mejor las sugerencias"
           onChange={(e) => setObservations(e.target.value)}
-          className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary"
+          className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer"
           value={observations}
+          placeholder="Ej: Proyectos cortos"
         ></input>
+        <Tooltip
+          id="obervations-tooltip"
+          className="peer-focus:hidden"
+          style={{
+            backgroundColor: "#333",
+            color: "white",
+            borderRadius: "6px",
+            padding: "10px",
+            fontSize: "14px",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+          }}
+        />
         <button
           type="submit"
           className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2"
@@ -271,6 +320,7 @@ const MainIAComp = () => {
         <div
           id="output"
           className="w-full h-full rounded-md overflow-y-scroll scrollbar-hide p-5"
+          data-testid="skeleton-loader"
         >
           {loading && <SkeletonCards />}
           {output && (
@@ -391,16 +441,15 @@ const MainIAComp = () => {
           )}
         </div>
         {output && (
-          <Button
-            isIconOnly
+          <button
             aria-label="Take a photo"
             color="currentColor"
-            variant="faded"
-            className="absolute z-20 right-2 top-2"
+            className="absolute z-20 right-2 top-2 rounded-xl p-2 border-light-highlight/30 dark:border-dark-highlight/30 border-2 hover:border-light-highlight
+            dark:hover:border-dark-highlight transition ease-in-out bg-light-secondary/20 dark:bg-dark-secondary/20 text-light-highlight"
             onClick={downloadPDF}
           >
             <CameraIcon />
-          </Button>
+          </button>
         )}
       </section>
       {output && <ProjectCarousel projects={outputSections.projects} />}

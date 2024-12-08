@@ -1,3 +1,5 @@
+import '../styles/cameraicon.css'
+
 export const CameraIcon = ({fill = "currentColor", size, height, width, ...props}) => {
     return (
       <svg

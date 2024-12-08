@@ -19,7 +19,7 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-async function run(stack, experience, observations) {
+async function run(stack, skill, observations) {
   const chatSession = model.startChat({
     generationConfig,
     history: [],
@@ -29,9 +29,9 @@ async function run(stack, experience, observations) {
   Provide all responses in Spanish, formatted in Markdown.
 
   Context:
-  - Developer stack: ${stack || "No definido"}
-  - Experience level: ${experience || "Sin experiencia"}
-  - Observations: ${observations || "Sin observaciones"}
+  - Developer stack: ${stack || "Not defined"}
+  - Skill level: ${skill || "No skill level"}
+  - Observations: ${observations || "No observations"}
 
   Your role:
   As a mentor, analyze their skills and observations to suggest 5 practical projects that:

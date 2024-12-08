@@ -12,6 +12,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useContext, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import DOMPurify from "dompurify";
+import { ShowMoreicon } from "../showmorebutton/ShowMoreIcon";
 
 const ProjectCarousel = ({ projects }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -111,57 +112,30 @@ const ProjectCarousel = ({ projects }) => {
                 </CardBody>
                 <Divider />
                 <CardFooter className="w-full h-fit flex text-end justify-between">
-                  <Link
-                    isExternal
-                    onClick={(e) => {
-                      handleShowMore(e);
-                    }}
-                    className="cursor-pointer text-light-text dark:text-dark-text"
+                <button
+                    aria-label="Take a photo"
+                    color="currentColor"
+                    className=""
+                    onClick={(e) => handleShowMore(e)}
                   >
-                    <p>
+                    
                       {showMore ? (
-                        <svg
-                          width="20px"
-                          height="20px"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="rotate-180"
-                        >
-                          <path
-                            d="M4 8L12 16L20 8"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                        <div className="rotate-180">
+                          <ShowMoreicon></ShowMoreicon>
+                        </div>
+                        
                       ) : (
-                        <svg
-                          width="20px"
-                          height="20px"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M4 8L12 16L20 8"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                        <ShowMoreicon></ShowMoreicon>
                       )}
-                    </p>
-                  </Link>
+                    
+                  </button>
                   <div className="flex-col sm:flex-row flex items-center">
                     <p>⏳</p>
-                    <p>{outputLoaded && project.body.split("|||")[3]?.split(":")[1]}</p>
+                    <p>{project.body.split("|||")[3]?.split(":")[1]}</p>
                   </div>
                   <div className="flex-col sm:flex-row flex items-center">
                     <p>⚡</p>
-                    <p>{outputLoaded && project.body.split("|||")[6]?.split(":")[1]}</p>
+                    <p>{project.body.split("|||")[6]?.split(":")[1]}</p>
                   </div>
                 </CardFooter>
               </Card>

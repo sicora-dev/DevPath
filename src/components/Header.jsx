@@ -47,7 +47,7 @@ const Header = () => {
     `}
       >
         <h1 className="font-bold text-center font-title text-light-heading dark:text-dark-heading">
-          devpath.es (v1.0)
+          DevPath (v1.0)
         </h1>
         <section className="flex gap-5">
           <button
@@ -105,7 +105,7 @@ const Header = () => {
           </span>{" "}
           adaptada a tu{" "}
           <span className="text-light-highlight dark:text-dark-highlight">
-            stack y experiencia
+            stack y habilidades
           </span>
         </h2>
       </main>

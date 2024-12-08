@@ -64,7 +64,7 @@ const ProjectCarousel = () => {
         <div className="flex relative">
           {projects.map((project, index) => (
             <div
-              className="sm:flex-[0_0_85%] flex-[0_0_99%] rounded-md"
+              className="sm:flex-[0_0_85%] flex-[0_0_99%] rounded-md h-fit"
               key={index}
             >
               <Card
@@ -144,7 +144,10 @@ const ProjectCarousel = () => {
                   >
                     
                       {showMore ? (
-                        <ShowMoreicon></ShowMoreicon>
+                        <div className="rotate-180">
+                          <ShowMoreicon></ShowMoreicon>
+                        </div>
+                        
                       ) : (
                         <ShowMoreicon></ShowMoreicon>
                       )}
@@ -163,7 +166,7 @@ const ProjectCarousel = () => {
             </div>
           ))}
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-10">
           <button className="z-10 p-2" onClick={scrollPrev}>
             <svg
               width="30px"
