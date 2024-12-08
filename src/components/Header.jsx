@@ -47,7 +47,7 @@ const Header = () => {
     `}
       >
         <h1 className="font-bold text-center font-title text-light-heading dark:text-dark-heading">
-          devpath.es
+          devpath.es (v1.0)
         </h1>
         <section className="flex gap-5">
           <Button
