@@ -7,14 +7,18 @@ import {
   Link,
   Divider,
 } from "@nextui-org/react";
+import { Context } from "../context/Context";
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import DOMPurify from "dompurify";
 
 const ProjectCarousel = ({ projects }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [showMore, setShowMore] = useState(false);
+  const {
+    outputLoaded
+  } = useContext(Context);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -51,7 +55,7 @@ const ProjectCarousel = ({ projects }) => {
                     width={40}
                   />
                   <div className="flex flex-col">
-                    <p className="text-lg font-bold">{project.title}</p>
+                    <p className="text-lg font-bold">{outputLoaded && project.title}</p>
                   </div>
                 </CardHeader>
                 <Divider />
@@ -63,7 +67,7 @@ const ProjectCarousel = ({ projects }) => {
                       📝Descripción📝
                     </h4>
                     <ReactMarkdown className="text-center">
-                      {project.body.split("|||")[1].split(":")[1]}
+                      {outputLoaded && project.body.split("|||")[1].split(":")[1]}
                     </ReactMarkdown>
                   </div>
                   <div>
@@ -72,7 +76,7 @@ const ProjectCarousel = ({ projects }) => {
                     </h4>
                     <section>
                       <ul>
-                        {project.body
+                        {outputLoaded && project.body
                           .split("|||")[2]
                           .split(":")[1]
                           .split("-")
@@ -92,7 +96,7 @@ const ProjectCarousel = ({ projects }) => {
                     <div className="flex flex-col items-center text-center">
                       <h4 className="font-semibold mb-2">⌛Valor⌛</h4>
                       <section>
-                        {project.body.split("|||")[5].split(":")[1]}
+                        {outputLoaded && project.body.split("|||")[5].split(":")[1]}
                       </section>
                     </div>
                     <div className="flex flex-col items-center text-center">
@@ -100,7 +104,7 @@ const ProjectCarousel = ({ projects }) => {
                         🛠️Stack🛠️
                       </h4>
                       <section>
-                        {project.body.split("|||")[4].split(":")[1]}
+                        {outputLoaded && project.body.split("|||")[4].split(":")[1]}
                       </section>
                     </div>
                   </div>
@@ -127,9 +131,9 @@ const ProjectCarousel = ({ projects }) => {
                           <path
                             d="M4 8L12 16L20 8"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       ) : (
@@ -143,9 +147,9 @@ const ProjectCarousel = ({ projects }) => {
                           <path
                             d="M4 8L12 16L20 8"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       )}
@@ -153,11 +157,11 @@ const ProjectCarousel = ({ projects }) => {
                   </Link>
                   <div className="flex-col sm:flex-row flex items-center">
                     <p>⏳</p>
-                    <p>{project.body.split("|||")[3]?.split(":")[1]}</p>
+                    <p>{outputLoaded && project.body.split("|||")[3]?.split(":")[1]}</p>
                   </div>
                   <div className="flex-col sm:flex-row flex items-center">
                     <p>⚡</p>
-                    <p>{project.body.split("|||")[6]?.split(":")[1]}</p>
+                    <p>{outputLoaded && project.body.split("|||")[6]?.split(":")[1]}</p>
                   </div>
                 </CardFooter>
               </Card>
@@ -177,9 +181,9 @@ const ProjectCarousel = ({ projects }) => {
               <path
                 d="M16 11L12 15L8 11M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>
@@ -195,9 +199,9 @@ const ProjectCarousel = ({ projects }) => {
               <path
                 d="M16 11L12 15L8 11M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>

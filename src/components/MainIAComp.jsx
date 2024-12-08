@@ -32,47 +32,50 @@ const MainIAComp = () => {
     setPreviousPrompts,
     loading,
     output,
+    setOutput,
+    outputLoaded,
+    setOutputLoaded,
     onSent,
   } = useContext(Context);
 
   const [outputSections, setOutputSections] = useState({
     intro: {
-      title: "# Proyectos Recomendados",
-      body: "Bienvenido/a al mundo de la programación. Como mentor, te guiaré en tu viaje de aprendizaje con una serie de proyectos prácticos diseñados para principiantes sin experiencia previa. Estos proyectos te ayudarán a construir una base sólida y a desarrollar habilidades clave.",
+      title: "",
+      body: "",
     },
     analysis: {
-      title: "## Análisis de Stack Tecnológico",
-      body: "Dado que no has especificado un stack tecnológico, te recomendaré proyectos utilizando Python, un lenguaje popular, versátil y con una gran comunidad, ideal para principiantes. Posteriormente, podrás explorar otras tecnologías basándote en tus intereses.",
+      title: "",
+      body: "",
     },
     roadmap: {
-      title: "## Ruta de Aprendizaje",
-      body: "La ruta de aprendizaje se centrará en la progresión gradual de la complejidad. Comenzaremos con conceptos básicos de programación en Python, pasando por aplicaciones interactivas simples, gestión de datos, aplicaciones multi-función y culminando con un pequeño proyecto integrador. Cada proyecto te preparará para el siguiente, fortaleciendo tus habilidades de forma gradual.",
+      title: "",
+      body: "",
     },
     projects: [
       {
-        title: "Proyecto 1: Calculadora Básica",
-        body: "|||\n- Descripción: Una calculadora que realiza operaciones aritméticas básicas (suma, resta, multiplicación, división).\n|||\n- Objetivos de aprendizaje:\n    - Familiarización con la sintaxis básica de Python.\n    - Uso de variables y operadores.\n    - Entrada y salida de datos por consola.\n    - Manejo de errores (e.g., división por cero).\n|||\n- ⏱️ Tiempo estimado: 2-3 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra comprensión de variables, operadores y manejo básico de entrada/salida.",
+        title: "",
+        body: "",
       },
       {
-        title: "Proyecto 2: Adivina el Número",
-        body: "|||\n- Descripción: Un juego donde la computadora genera un número aleatorio y el usuario debe adivinarlo en un número limitado de intentos.\n|||\n- Objetivos de aprendizaje:\n    - Uso de estructuras de control (bucles, condicionales).\n    - Generación de números aleatorios.\n    - Interacción con el usuario a través de la consola.\n    - Implementación de lógica de juego.\n|||\n- ⏱️ Tiempo estimado: 3-4 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra comprensión de lógica de programación, bucles y condicionales.",
+        title: "",
+        body: "",
       },
       {
-        title: "Proyecto 3: Lista de Tareas",
-        body: "|||\n- Descripción: Una aplicación sencilla para gestionar una lista de tareas. Permite añadir, eliminar y marcar tareas como completadas.\n|||\n- Objetivos de aprendizaje:\n    - Uso de listas o arrays.\n    - Persistencia de datos (guardar y cargar la lista desde un archivo).\n    - Mejoras en la interacción con el usuario.\n|||\n- ⏱️ Tiempo estimado: 5-7 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Muestra manejo de datos, persistencia y mejora de la experiencia de usuario.",
+        title: "",
+        body: "",
       },
       {
-        title: "Proyecto 4: Conversor de Unidades",
-        body: "|||\n- Descripción: Un conversor que permite convertir entre diferentes unidades de medida (e.g., Celsius a Fahrenheit, metros a pulgadas).\n|||\n- Objetivos de aprendizaje:\n    - Creación de funciones.\n    - Uso de diccionarios o estructuras de datos similares.\n    - Implementación de múltiples opciones de conversión.\n    - Diseño de una interfaz de usuario más amigable.\n|||\n- ⏱️ Tiempo estimado: 7-10 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra capacidad para modular el código, usar estructuras de datos complejas y mejorar la interfaz de usuario.",
+        title: "",
+        body: "",
       },
       {
-        title: "Proyecto 5: Generador de Contraseñas",
-        body: "|||\n- Descripción: Un programa que genera contraseñas aleatorias que cumplen con ciertos criterios de seguridad (longitud, caracteres especiales, etc.).\n|||\n- Objetivos de aprendizaje:\n    - Manejo de cadenas de texto.\n    - Generación de caracteres aleatorios específicos.\n    - Implementación de validación de contraseñas.\n    - Integración de todos los conceptos aprendidos en proyectos anteriores.\n|||\n- ⏱️ Tiempo estimado: 10-14 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Proyecto completo que demuestra un amplio conocimiento de programación en Python y aplicación práctica de varios conceptos.",
+        title: "",
+        body: "",
       },
     ],
     tips: {
-      title: "## Consejos Finales",
-      body: "* **Practica consistentemente:** Dedica tiempo regularmente a la programación, incluso si son solo 30 minutos al día.\n* **Busca recursos online:** Utiliza plataformas como Codecademy, freeCodeCamp, Coursera o edX para aprender Python y complementar estos proyectos.\n* **No tengas miedo de buscar ayuda:** Si te atascas, busca ayuda en foros, comunidades online o pregúntame a mí.\n* **Documenta tu código:** Acostúmbrate a escribir comentarios en tu código para facilitar su comprensión.\n* **¡Diviértete!** La programación debe ser un proceso de aprendizaje y disfrute.",
+      title: "",
+      body: "",
     },
   });
 
@@ -150,18 +153,16 @@ const MainIAComp = () => {
   };
 
   useEffect(() => {
+    const savedOutput = sessionStorage.getItem("output");
+    if (savedOutput && !output) {
+      // Set the output in context instead of reassigning
+      setOutput(savedOutput);
+    }
+
     if (output) {
       // console.log("Raw output:", output); // Verificar el output inicial
-
-      const introSection = extractSection(
-        output,
-        "--INTRO_START--",
-        "--INTRO_END--"
-      );
-      // Verificar la sección extraída
-
-      const introTitle = extractTitle(introSection);
-
+      sessionStorage.setItem("output", output);
+      
       const sections = {
         intro: {
           title: extractTitle(
@@ -199,11 +200,12 @@ const MainIAComp = () => {
           ),
         },
       };
-      console.log(output)
+      console.log("hola");
       setOutputSections(sections);
+      setOutputLoaded(true);
       // console.log("Output sections:", sections);
     }
-  }, [output]);
+  }, [output, setOutput]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -211,8 +213,6 @@ const MainIAComp = () => {
     setPreviousPrompts([...previousPrompts]);
     onSent();
   };
-
-  
 
   return (
     <div
@@ -272,10 +272,7 @@ const MainIAComp = () => {
           id="output"
           className="w-full h-full rounded-md overflow-y-scroll scrollbar-hide p-5"
         >
-      
-          {loading && (
-            <SkeletonCards />
-          )}
+          {loading && <SkeletonCards />}
           {output && (
             <section className="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-2 gap-5 w-full ">
               <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
@@ -390,8 +387,6 @@ const MainIAComp = () => {
               </Card>
 
               {/*  */}
-
-              
             </section>
           )}
         </div>
@@ -408,13 +403,9 @@ const MainIAComp = () => {
           </Button>
         )}
       </section>
-      {output && (
-        <ProjectCarousel projects={outputSections.projects} />
-      )}
-      {!output && (
-        <ExampleProjectCarousel />
-        )}
-      
+      {output && <ProjectCarousel projects={outputSections.projects} />}
+      {!output && <ExampleProjectCarousel />}
+
       <div
         id="markdown-content"
         className="hidden space-y-5 w-[80%] text-black"
