@@ -1,5 +1,6 @@
 import { useState,createContext } from "react";
-import run from "../config/gemini";
+import { run, runChat } from "../config/gemini.js";
+import { text } from "framer-motion/client";
 
 export const Context = createContext();
 
@@ -8,11 +9,14 @@ const ContextProvider = (props) => {
     const [stack, setStack] = useState("");
     const [skill, setSkill] = useState("");
     const [observations, setObservations] = useState("");
-    const [recentPrompt, setRecentPrompt] = useState("");
-    const [previousPrompts, setPreviousPrompts] = useState([]);
+    const [input, setInput] = useState("");
+    const [history, setHistory] = useState([]);
+    const [selectedProject, setSelectedProject] = useState("");
     const [loading, setLoading] = useState(false);
+    const [loadingChat, setLoadingChat] = useState(false);
     const [output, setOutput] = useState("");
     const [outputLoaded, setOutputLoaded] = useState(false);
+    const [chatBotOutput, setChatBotOutput] = useState("");
 
 
     const onSent = async () => {
@@ -28,6 +32,15 @@ const ContextProvider = (props) => {
 
     }
 
+    const onChatbotSent = async () => {
+        setLoadingChat(true);
+        const result = await runChat(history, input, selectedProject);
+        console.log(result);
+        setChatBotOutput(result);
+        setLoadingChat(false);
+        setHistory([...history, { role: "user", parts:[{text: input}] }, { role: "model", parts:[{text: result}] }]);
+    }
+
     const contextValue = {
         stack,
         setStack,
@@ -35,16 +48,21 @@ const ContextProvider = (props) => {
         setSkill,
         observations,
         setObservations,
-        recentPrompt,
-        setRecentPrompt,
-        previousPrompts,
-        setPreviousPrompts,
+        history,
+        setHistory,
+        selectedProject,
+        setSelectedProject,
         loading,
+        input,
+        setInput,
         output,
         setOutput,
         outputLoaded, 
         setOutputLoaded,
-        onSent
+        chatBotOutput,
+        setChatBotOutput,
+        onSent,
+        onChatbotSent
     }
 
     return (

@@ -8,8 +8,16 @@ const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+  model: "gemini-1.5-pro",
 });
+
+const chatbotConfig = {
+  temperature: 0.5,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 8192,
+  responseMimeType: "text/plain",
+};
 
 const generationConfig = {
   temperature: 1,
@@ -18,6 +26,37 @@ const generationConfig = {
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 };
+
+async function runChat(history, userInput, project) {
+  const chatSession = model.startChat({
+    chatbotConfig,
+    history,
+  });
+  const prompt = `You are TechMentor, an experienced software engineering coach.
+  Provide all responses in Spanish.
+
+  Context:
+  - Selected project: ${project || "No project selected"}
+  - User input: ${userInput || "No input"}
+
+  Your role:
+  As a mentor, guide the user through the selected project by:
+  - Answering all questions related to the project
+  - Providing step-by-step instructions when needed
+  - Offering tips and best practices
+  - Helping with troubleshooting and debugging
+  - Suggesting additional resources if needed
+
+  Focus only on the selected project and provide comprehensive support for it.
+
+  Remember:
+  - Ensure clarity and conciseness in explanations
+  - Adapt complexity to the user's skill level`;
+
+  const result = await chatSession.sendMessage(prompt);
+  const response = result.response.text();
+  return response;
+}
 
 async function run(stack, skill, observations) {
   const chatSession = model.startChat({
@@ -154,4 +193,7 @@ async function run(stack, skill, observations) {
   return result.response.text();
 }
 
-export default run;
+
+export { run, runChat };
+
+
