@@ -22,17 +22,17 @@ const ProjectCarousel = ({ projects }) => {
   const { outputLoaded, setSelectedProject } = useContext(Context);
   const [actualProject, setActualProject] = useState(1);
 
-  const scrollPrev = () => {
+  const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
-    console.log(actualProject)
-    setShowMore(false);
-  };
 
-  const scrollNext = () => {
-    if (emblaApi) emblaApi.scrollNext();
-    console.log(actualProject)
     setShowMore(false);
-  };
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+
+    setShowMore(false);
+  }, [emblaApi]);
 
   const handleShowMore = (e) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ const ProjectCarousel = ({ projects }) => {
   };
 
   const handleChat = () => {
-    console.log(actualProject)
+    console.log(actualProject);
     setSelectedProject(actualProject);
   };
 
@@ -49,13 +49,13 @@ const ProjectCarousel = ({ projects }) => {
       const onSelect = () => {
         const selectedIndex = emblaApi.selectedScrollSnap();
         setActualProject(selectedIndex + 1);
-        console.log(actualProject)
+        console.log(actualProject);
       };
       emblaApi.on("select", onSelect);
       onSelect();
+      console.log(actualProject);
     }
-    
-  }, [actualProject]);
+  }, [actualProject, emblaApi]);
 
   return (
     <div className="w-full max-w-[800px] place-self-center relative">
@@ -164,9 +164,11 @@ const ProjectCarousel = ({ projects }) => {
                     <p>{project.body.split("|||")[6]?.split(":")[1]}</p>
                   </div>
                 </CardFooter>
-                <button onClick={() => handleChat()}>
+                <button
+                  className={`absolute z-50 right-0 top-0 w-12 h-12 p-2 cursor-pointer sm:block hidden`}
+                  onClick={() => handleChat()}
+                >
                   <svg
-                    className={`absolute z-10 right-0 top-0 w-10 h-10 p-2 cursor-pointer sm:block hidden`}
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -215,9 +217,11 @@ const ProjectCarousel = ({ projects }) => {
               />
             </svg>
           </button>
-          <button onClick={() => handleChat()}>
+          <button
+            className={` w-14 h-14 p-2 cursor-pointer sm:hidden block`}
+            onClick={() => handleChat()}
+          >
             <svg
-              className="w-14 p-2 cursor-pointer sm:hidden block"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
