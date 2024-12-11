@@ -219,7 +219,7 @@ const MainIAComp = () => {
         output || loading ? "" : "justify-center"
       } `}
     >
-      {output && !selectedProject && (
+      {!selectedProject && (
         <form onSubmit={handleClick} className="flex flex-col w-fit">
           <label
             htmlFor="stack"
