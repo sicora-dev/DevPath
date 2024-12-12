@@ -22,3 +22,9 @@ html {
   scroll-behavior: smooth;
 }
 
+pre {
+  @apply bg-light-background/30 dark:bg-dark-background/30;
+  padding: 1rem;
+  width: fit-content;
+}
+

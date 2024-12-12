@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Context } from "../context/Context";
 import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 
 const ChatBot = () => {
   const {
@@ -59,7 +60,7 @@ const ChatBot = () => {
           </svg>
         </span>{" "}
         sobre el{" "}
-        <span className="text-light-heading dark:text-dark-heading">
+        <span className="text-light-heading">
           {outputSections.projects[selectedProject - 1].title[0].toLowerCase()}
           {outputSections.projects[selectedProject - 1].title.slice(1)}
         </span>
@@ -74,7 +75,7 @@ const ChatBot = () => {
             }`}
           >
             {chat.role === "model" && (
-              <div className="flex items-start">
+              <div className="flex items-start  max-w-[80%]">
                 <h3>
                   <svg
                     width="20px"
@@ -94,16 +95,49 @@ const ChatBot = () => {
                   </svg>
                 </h3>
                 <p
-                  className={`bg-light-secondary break-words dark:bg-dark-secondary mx-1 my-2 w-fit rounded-md rounded-tl-none px-2 py-1 max-w-[80%]`}
+                  className={`bg-light-secondary dark:bg-dark-secondary mx-1 my-2 w-fit rounded-md rounded-tl-none px-2 py-1`}
                 >
-                  {chat.parts[0].text}
+                  <Markdown>{chat.parts[0].text}</Markdown>
                 </p>
               </div>
             )}
             {chat.role === "user" && (
-              <div className="flex items-start ">
+              <div className="flex items-start max-w-[80%]">
+                <h3>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M17 20C18.1046 20 19.0454 19.0899 18.7951 18.0141C18.1723 15.338 16.0897 14 12 14C7.91032 14 5.8277 15.338 5.20492 18.0141C4.95455 19.0899 5.89543 20 7 20H17Z"
+                        stroke="#000000"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></path>{" "}
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M12 11C14 11 15 10 15 7.5C15 5 14 4 12 4C10 4 9 5 9 7.5C9 10 10 11 12 11Z"
+                        stroke="#000000"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
+                </h3>
                 <p
-                  className={`bg-light-secondary break-words dark:bg-dark-secondary mx-1 my-2 w-fit rounded-md px-2 py-1 rounded-tr-none max-w-[80%]`}
+                  className={`bg-light-secondary dark:bg-dark-secondary mx-1 my-2 w-fit rounded-md px-2 py-1 rounded-tr-none `}
                 >
                   {chat.parts[0].text}
                 </p>
@@ -118,11 +152,10 @@ const ChatBot = () => {
           value={input}
           onChange={(e) => {
             setInput(e.target.value);
-            e.target.style.height = 'auto';
+            e.target.style.height = "auto";
             e.target.style.height = `${Math.min(e.target.scrollHeight, 208)}px`;
           }}
           className="w-[90%] h-10 resize-none overflow-y-scroll p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight"
-          
         />
         <button
           onClick={(e) => handleSend(e)}

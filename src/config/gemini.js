@@ -79,7 +79,7 @@ async function run(stack, skill, observations, restricted) {
   - Progress in difficulty while staying within their skill level
   - Use different aspects of their tech stack
   - Are real-world focused and market-relevant
-  - If strict mode is enabled, only use technologies mentioned in the stack, otherwise, feel free to suggest any relevant technology
+  - If strict mode is enabled, only use technologies mentioned in the stack, no extra frameworks, libraries or other stuff, only the mentioned stack, otherwise, feel free to suggest any relevant technology
   
   When processing observations:
   - Only consider technical observations related to coding experience
@@ -192,7 +192,7 @@ async function run(stack, skill, observations, restricted) {
   - Maintain consistent spacing
   - Keep descriptions concise
   - Adapt complexity to experience level`;
-  console.log(restricted)
+
 
   const result = await chatSession.sendMessage(prompt);
   return result.response.text();
