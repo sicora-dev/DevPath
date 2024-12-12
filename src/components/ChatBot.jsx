@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Context } from "../context/Context";
 import ReactMarkdown from "react-markdown";
 import Markdown from "react-markdown";
+import "../styles/chatbot.css"
 
 const ChatBot = () => {
   const {
@@ -37,7 +38,7 @@ const ChatBot = () => {
   };
 
   return (
-    <div>
+    <div className="px-3">
       <h1 className="w-fit font-title text-2xl rounded-md py-1 px-2 bg-light-secondary dark:bg-dark-secondary mb-2">
         Preguntale a la{" "}
         <span className="text-light-highlight dark:text-dark-highlight inline-block">
@@ -66,7 +67,7 @@ const ChatBot = () => {
         </span>
       </h1>
 
-      <div className="w-[90vw] min-h-[45vh] border-none rounded-md bg-light-background dark:bg-dark-background max-h-[50vh] overflow-hidden overflow-y-scroll">
+      <div className="w-[90vw] min-h-[45vh] border-none rounded-md bg-light-background dark:bg-dark-background max-h-[50vh] overflow-y-scroll p-2 scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md">
         {history.map((chat, index) => (
           <div
             key={index}
@@ -75,7 +76,7 @@ const ChatBot = () => {
             }`}
           >
             {chat.role === "model" && (
-              <div className="flex items-start  max-w-[80%]">
+              <div className="flex  max-w-[80%]">
                 <h3>
                   <svg
                     width="20px"
@@ -102,9 +103,16 @@ const ChatBot = () => {
               </div>
             )}
             {chat.role === "user" && (
-              <div className="flex items-start max-w-[80%]">
+              <div className="flex max-w-[80%]">
+                <p
+                  className={`bg-light-secondary dark:bg-dark-secondary mx-1 my-2 w-fit rounded-md px-2 py-1 rounded-tr-none `}
+                >
+                  {chat.parts[0].text}
+                </p>
                 <h3>
                   <svg
+                    width="24px"
+                    height="24px"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -118,17 +126,8 @@ const ChatBot = () => {
                     <g id="SVGRepo_iconCarrier">
                       {" "}
                       <path
-                        d="M17 20C18.1046 20 19.0454 19.0899 18.7951 18.0141C18.1723 15.338 16.0897 14 12 14C7.91032 14 5.8277 15.338 5.20492 18.0141C4.95455 19.0899 5.89543 20 7 20H17Z"
-                        stroke="#000000"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>{" "}
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12 11C14 11 15 10 15 7.5C15 5 14 4 12 4C10 4 9 5 9 7.5C9 10 10 11 12 11Z"
-                        stroke="#000000"
+                        d="M18 18.7083C17.4832 16.375 15.5357 15 12.0001 15C8.46459 15 6.51676 16.375 6 18.7083M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM12 12C13.3333 12 14 11.2857 14 9.5C14 7.71429 13.3333 7 12 7C10.6667 7 10 7.71429 10 9.5C10 11.2857 10.6667 12 12 12Z"
+                        stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -136,11 +135,6 @@ const ChatBot = () => {
                     </g>
                   </svg>
                 </h3>
-                <p
-                  className={`bg-light-secondary dark:bg-dark-secondary mx-1 my-2 w-fit rounded-md px-2 py-1 rounded-tr-none `}
-                >
-                  {chat.parts[0].text}
-                </p>
               </div>
             )}
           </div>
@@ -155,7 +149,7 @@ const ChatBot = () => {
             e.target.style.height = "auto";
             e.target.style.height = `${Math.min(e.target.scrollHeight, 208)}px`;
           }}
-          className="w-[90%] h-10 resize-none overflow-y-scroll p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight"
+          className="w-[90%] h-10 resize-none overflow-y-scroll no-scrollbar-b p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md"
         />
         <button
           onClick={(e) => handleSend(e)}
