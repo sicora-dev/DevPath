@@ -17,14 +17,54 @@ const ContextProvider = (props) => {
     const [output, setOutput] = useState("");
     const [outputLoaded, setOutputLoaded] = useState(false);
     const [chatBotOutput, setChatBotOutput] = useState("");
+    const [outputSections, setOutputSections] = useState({
+        intro: {
+          title: "",
+          body: "",
+        },
+        analysis: {
+          title: "",
+          body: "",
+        },
+        roadmap: {
+          title: "",
+          body: "",
+        },
+        projects: [
+          {
+            title: "",
+            body: "",
+          },
+          {
+            title: "",
+            body: "",
+          },
+          {
+            title: "",
+            body: "",
+          },
+          {
+            title: "",
+            body: "",
+          },
+          {
+            title: "",
+            body: "",
+          },
+        ],
+        tips: {
+          title: "",
+          body: "",
+        },
+      });
 
 
-    const onSent = async () => {
+    const onSent = async (restricted) => {
 
         setOutput("");
         setOutputLoaded(false);
         setLoading(true);
-        const result = await run(stack, skill, observations);
+        const result = await run(stack, skill, observations, restricted);
         setOutput(result);
         setLoading(false);
         setStack("");
@@ -34,11 +74,18 @@ const ContextProvider = (props) => {
 
     const onChatbotSent = async () => {
         setLoadingChat(true);
-        const result = await runChat(history, input, selectedProject);
-        console.log(result);
+        const result = await runChat(history, input, outputSections.projects[selectedProject-1]);
+        console.log(outputSections.projects[selectedProject-1]);
         setChatBotOutput(result);
         setLoadingChat(false);
-        setHistory([...history, { role: "user", parts:[{text: input}] }, { role: "model", parts:[{text: result}] }]);
+        console.log(result)
+        console.log(input)
+        setHistory(prevHistory => [
+            ...prevHistory,
+            { role: "model", parts: [{ text: result }] }
+          ]);
+        console.log(history);
+        setInput("");
     }
 
     const contextValue = {
@@ -59,6 +106,8 @@ const ContextProvider = (props) => {
         setOutput,
         outputLoaded, 
         setOutputLoaded,
+        outputSections,
+        setOutputSections,
         chatBotOutput,
         setChatBotOutput,
         onSent,

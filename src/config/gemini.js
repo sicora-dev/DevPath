@@ -36,7 +36,8 @@ async function runChat(history, userInput, project) {
   Provide all responses in Spanish.
 
   Context:
-  - Selected project: ${project || "No project selected"}
+  - Selected project: ${project.title || "No project selected"}
+  - Project description: ${project.body || "No description"}
   - User input: ${userInput || "No input"}
 
   Your role:
@@ -58,7 +59,7 @@ async function runChat(history, userInput, project) {
   return response;
 }
 
-async function run(stack, skill, observations) {
+async function run(stack, skill, observations, restricted) {
   const chatSession = model.startChat({
     generationConfig,
     history: [],
@@ -71,12 +72,14 @@ async function run(stack, skill, observations) {
   - Developer stack: ${stack || "Not defined"}
   - Skill level: ${skill || "No skill level"}
   - Observations: ${observations || "No observations"}
+  - Strict mode: ${restricted ? "Enabled" : "Disabled"}
 
   Your role:
   As a mentor, analyze their skills and observations to suggest 5 practical projects that:
   - Progress in difficulty while staying within their skill level
   - Use different aspects of their tech stack
   - Are real-world focused and market-relevant
+  - If strict mode is enabled, only use technologies mentioned in the stack, otherwise, feel free to suggest any relevant technology
   
   When processing observations:
   - Only consider technical observations related to coding experience
@@ -174,6 +177,7 @@ async function run(stack, skill, observations) {
   [Mostrar dificultad sobre 10, siendo 1 el más fácil y 10 el más difícil]
   [Seguir estrictamente la plantilla sin agregar estilos o formatos adicionales]
   [No aplicar estilos o formatos que no estén explícitamente definidos en la plantilla]
+  [Si el modo estricto está habilitado, no debes agregar ninguna tecnología o concepto que no haya sido mencionado en el stack tecnológico]
   
   --PROJECTS_END--
 
@@ -188,6 +192,7 @@ async function run(stack, skill, observations) {
   - Maintain consistent spacing
   - Keep descriptions concise
   - Adapt complexity to experience level`;
+  console.log(restricted)
 
   const result = await chatSession.sendMessage(prompt);
   return result.response.text();

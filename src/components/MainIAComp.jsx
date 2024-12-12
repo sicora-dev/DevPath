@@ -6,6 +6,7 @@ import { Link } from "@nextui-org/link";
 import { Image } from "@nextui-org/image";
 import { ScrollShadow } from "@nextui-org/scroll-shadow";
 import { Skeleton } from "@nextui-org/skeleton";
+import { Switch } from "@nextui-org/react";
 import { Context } from "../context/Context";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
@@ -19,6 +20,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import SkeletonCards from "./SkeletonCards";
 import ChatBot from "./ChatBot";
+import { use } from "react";
 
 const MainIAComp = () => {
   const {
@@ -36,50 +38,13 @@ const MainIAComp = () => {
     output,
     setOutput,
     outputLoaded,
+    outputSections,
+    setOutputSections,
     setOutputLoaded,
     onSent,
   } = useContext(Context);
 
-  const [outputSections, setOutputSections] = useState({
-    intro: {
-      title: "",
-      body: "",
-    },
-    analysis: {
-      title: "",
-      body: "",
-    },
-    roadmap: {
-      title: "",
-      body: "",
-    },
-    projects: [
-      {
-        title: "",
-        body: "",
-      },
-      {
-        title: "",
-        body: "",
-      },
-      {
-        title: "",
-        body: "",
-      },
-      {
-        title: "",
-        body: "",
-      },
-      {
-        title: "",
-        body: "",
-      },
-    ],
-    tips: {
-      title: "",
-      body: "",
-    },
-  });
+  const [restricted, setRestricted] = useState(false);
 
   const extractSection = (output, startTag, endTag) => {
     const text = Array.isArray(output) ? output.join("") : output;
@@ -210,7 +175,7 @@ const MainIAComp = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    onSent();
+    onSent(restricted);
   };
 
   return (
@@ -220,7 +185,7 @@ const MainIAComp = () => {
       } `}
     >
       {!selectedProject && (
-        <form onSubmit={handleClick} className="flex flex-col w-fit">
+        <form onSubmit={(e) => handleClick(e)} className="flex flex-col w-fit">
           <label
             htmlFor="stack"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
@@ -235,7 +200,7 @@ const MainIAComp = () => {
             data-tooltip-content="El stack ayuda a filtrar proyectos según las tecnologías que manejas"
             onChange={(e) => setStack(e.target.value)}
             value={stack}
-            className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer"
+            className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             placeholder="Ej: JavaScript"
           />
           <Tooltip
@@ -250,6 +215,36 @@ const MainIAComp = () => {
               boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
             }}
           />
+          <div className="my-2 flex flex-col items-center justify-center w-full">
+            <label
+              className="p-2 text-light-highlight dark:text-dark-highlight font-bold"
+              htmlFor="strict-switch"
+            >
+              Modo estricto
+            </label>
+            <Switch
+              id="strict-switch"
+              isSelected={restricted}
+              onValueChange={() => setRestricted(!restricted)}
+              data-tooltip-id="strict-tooltip"
+              data-tooltip-content="En modo estricto, la IA solo sugerirá proyectos con las tecnologías del stack. Siempre que sea posible"
+              color="success"
+              className="w-full justify-center z-0 "
+            ></Switch>
+          </div>
+          <Tooltip
+            id="strict-tooltip"
+            className="peer-focus:hidden"
+            style={{
+              backgroundColor: "#333",
+              color: "white",
+              borderRadius: "6px",
+              padding: "10px",
+              fontSize: "14px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+            }}
+          />
+
           <label
             htmlFor="skill"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
@@ -264,7 +259,7 @@ const MainIAComp = () => {
             data-tooltip-content="La habilidad le sirve a la IA a sugerir proyectos más acordes a tu nivel"
             required
             onChange={(e) => setSkill(e.target.value)}
-            className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer"
+            className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             value={skill}
             placeholder="Ej: JavaScript-Medio"
           ></input>
@@ -292,7 +287,7 @@ const MainIAComp = () => {
             data-tooltip-id="obervations-tooltip"
             data-tooltip-content="Las observaciones ayudan a la IA a personalizar mejor las sugerencias"
             onChange={(e) => setObservations(e.target.value)}
-            className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer"
+            className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             value={observations}
             placeholder="Ej: Proyectos cortos"
           ></input>
@@ -324,7 +319,7 @@ const MainIAComp = () => {
           data-testid="skeleton-loader"
         >
           {loading && <SkeletonCards />}
-          {output && !selectedProject && (
+          {output && !selectedProject && !loading && (
             <section className="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-2 gap-5 w-full ">
               <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
                 <CardHeader className="flex gap-3 justify-center">
@@ -441,7 +436,7 @@ const MainIAComp = () => {
             </section>
           )}
         </div>
-        {output && !selectedProject && (
+        {output && !selectedProject && !loading && (
           <button
             aria-label="Take a photo"
             color="currentColor"
@@ -453,12 +448,10 @@ const MainIAComp = () => {
           </button>
         )}
       </section>
-      {output && !selectedProject && (
+      {output && !selectedProject && !loading && (
         <ProjectCarousel projects={outputSections.projects} />
       )}
       {!output && <ExampleProjectCarousel />}
-      <button onClick={() => setSelectedProject(null)}>asdasdadsadsa</button>
-
       <div
         id="markdown-content"
         className="hidden space-y-5 w-[80%] text-black"
@@ -493,6 +486,19 @@ const MainIAComp = () => {
         </ReactMarkdown>
       </div>
       {output && selectedProject && <ChatBot></ChatBot>}
+      {output && selectedProject && (
+        <div className="flex items-center justify-start w-[90vw]">
+          <button
+            onClick={() => {
+              setSelectedProject(null);
+              setHistory([]);
+            }}
+            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md"
+          >
+            Eliminar Chat
+          </button>
+        </div>
+      )}
     </div>
   );
 };
