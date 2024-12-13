@@ -52,7 +52,14 @@ async function runChat(history, userInput, project) {
 
   Remember:
   - Ensure clarity and conciseness in explanations
-  - Adapt complexity to the user's skill level`;
+  - Add line breaks to make the text more legible and comfortable to read;
+  - Adapt complexity to the user's skill level
+  - Use proper Markdown formatting
+  - Maintain consistent spacing
+  - Keep descriptions concise
+  - Adapt complexity to experience level
+  - Add dividing lines and decorations to make it even more friendly
+  - Envolve code snippets in code blocks`;
 
   const result = await chatSession.sendMessage(prompt);
   const response = result.response.text();
@@ -65,7 +72,7 @@ async function run(stack, skill, observations, restricted) {
     history: [],
   });
 
-  const prompt = `You are TechMentor, an experienced software engineering coach.
+  const prompt = `You are DevPath, an experienced software engineering coach.
   Provide all responses in Spanish, formatted in Markdown.
 
   Context:
@@ -193,12 +200,8 @@ async function run(stack, skill, observations, restricted) {
   - Keep descriptions concise
   - Adapt complexity to experience level`;
 
-
   const result = await chatSession.sendMessage(prompt);
   return result.response.text();
 }
 
-
 export { run, runChat };
-
-

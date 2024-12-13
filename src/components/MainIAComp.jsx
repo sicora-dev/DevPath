@@ -180,7 +180,7 @@ const MainIAComp = () => {
 
   return (
     <div
-      className={`flex flex-col items-center ${
+      className={`flex flex-col items-center  ${
         output || loading ? "" : "justify-center"
       } `}
     >
@@ -485,20 +485,8 @@ const MainIAComp = () => {
           {outputSections.tips.body}
         </ReactMarkdown>
       </div>
+
       {output && selectedProject && <ChatBot></ChatBot>}
-      {output && selectedProject && (
-        <div className="flex items-center justify-start w-[90vw]">
-          <button
-            onClick={() => {
-              setSelectedProject(null);
-              setHistory([]);
-            }}
-            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md"
-          >
-            Eliminar Chat
-          </button>
-        </div>
-      )}
     </div>
   );
 };
