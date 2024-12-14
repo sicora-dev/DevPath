@@ -180,7 +180,7 @@ const MainIAComp = () => {
 
   return (
     <div
-      className={`flex flex-col items-center ${
+      className={`flex flex-col items-center w-full ${
         output || loading ? "" : "justify-center"
       } `}
     >

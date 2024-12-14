@@ -67,15 +67,10 @@ const ProjectCarousel = ({ projects }) => {
               key={index}
             >
               <Card
-                className={`m-4 overflow-hidden dark:bg-dark-secondary bg-light-secondary relative`}
+                className={`m-4 overflow-hidden dark:bg-dark-secondary bg-light-secondary relative items-center`}
               >
-                <CardHeader className="flex gap-3 justify-center relative">
-                  <Image
-                    alt="Project pin"
-                    radius="sm"
-                    src="https://img.icons8.com/emoji/96/pushpin-emoji.png"
-                    width={40}
-                  />
+                <CardHeader className="flex gap-3 justify-center items-center text-center relative w-[80%]">
+                  
                   <div className="flex flex-col">
                     <p className="text-lg font-bold">
                       {outputLoaded && project.title}
@@ -218,7 +213,7 @@ const ProjectCarousel = ({ projects }) => {
             </svg>
           </button>
           <button
-            className={` w-14 h-14 p-2 cursor-pointer sm:hidden block`}
+            className={`w-14 h-14 p-2 cursor-pointer sm:hidden block`}
             onClick={() => handleChat()}
           >
             <svg

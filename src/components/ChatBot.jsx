@@ -38,62 +38,74 @@ const ChatBot = () => {
   };
 
   return (
-    <div className="px-3 flex flex-col justify-center items-center chatbot">
-      <div className="w-full flex gap-5 ">
-        <button
-          onClick={() => {
-            setSelectedProject(null);
-            setHistory([]);
-          }}
-          className="mb-2 py-1 px-2 bg-light-highlight dark:bg-dark-highlight rounded-md hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="sm:w-8 sm:h-8 w-6 h-6"
+    <div className="px-3 flex-1 flex-col content-center grid-cols-1 h-full w-full justify-items-center justify-center items-center chatbot">
+      <section className="flex w-fit items-center row-start-1 row-end-1 gap-2 py-2 justify-start">
+        <div className="flex items-center justify-start">
+          <button
+            onClick={() => {
+              setSelectedProject(null);
+              setHistory([]);
+            }}
+            className="py-1 px-2 bg-light-highlight dark:bg-dark-highlight rounded-md hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out justify-start"
           >
-            <path
-              d="M11 6L5 12M5 12L11 18M5 12H19"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        <h1 className="w-fit font-title text-2xl rounded-md py-1 px-2 bg-light-secondary dark:bg-dark-secondary mb-2">
-          Preguntale a la{" "}
-          <span className="text-light-highlight dark:text-dark-highlight inline-block">
-            IA{" "}
             <svg
-              width="20px"
-              height="20px"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="inline-block"
+              className="sm:w-8 sm:h-8 w-6 h-6"
             >
               <path
-                d="M18.5 8V3M5.5 21V16M16 5.5H21M3 18.5H8M6.5 2L5.71554 3.56892C5.45005 4.09989 5.31731 4.36538 5.13997 4.59545C4.98261 4.79959 4.79959 4.98261 4.59545 5.13997C4.36538 5.31731 4.0999 5.45005 3.56892 5.71554L2 6.5L3.56892 7.28446C4.0999 7.54995 4.36538 7.68269 4.59545 7.86003C4.79959 8.01739 4.98261 8.20041 5.13997 8.40455C5.31731 8.63462 5.45005 8.9001 5.71554 9.43108L6.5 11L7.28446 9.43108C7.54995 8.9001 7.68269 8.63462 7.86003 8.40455C8.01739 8.20041 8.20041 8.01739 8.40455 7.86003C8.63462 7.68269 8.9001 7.54995 9.43108 7.28446L11 6.5L9.43108 5.71554C8.9001 5.45005 8.63462 5.31731 8.40455 5.13997C8.20041 4.98261 8.01739 4.79959 7.86003 4.59545C7.68269 4.36538 7.54995 4.0999 7.28446 3.56892L6.5 2ZM17 12L16.0489 13.9022C15.7834 14.4332 15.6506 14.6987 15.4733 14.9288C15.3159 15.1329 15.1329 15.3159 14.9288 15.4733C14.6987 15.6506 14.4332 15.7834 13.9023 16.0489L12 17L13.9023 17.9511C14.4332 18.2166 14.6987 18.3494 14.9288 18.5267C15.1329 18.6841 15.3159 18.8671 15.4733 19.0712C15.6506 19.3013 15.7834 19.5668 16.0489 20.0977L17 22L17.9511 20.0978C18.2166 19.5668 18.3494 19.3013 18.5267 19.0712C18.6841 18.8671 18.8671 18.6841 19.0712 18.5267C19.3013 18.3494 19.5668 18.2166 20.0977 17.9511L22 17L20.0977 16.0489C19.5668 15.7834 19.3013 15.6506 19.0712 15.4733C18.8671 15.3159 18.6841 15.1329 18.5267 14.9288C18.3494 14.6987 18.2166 14.4332 17.9511 13.9023L17 12Z"
+                d="M11 6L5 12M5 12L11 18M5 12H19"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
-          </span>{" "}
-          sobre el{" "}
-          <span className="text-light-heading">
-            {outputSections.projects[
-              selectedProject - 1
-            ].title[0].toLowerCase()}
-            {outputSections.projects[selectedProject - 1].title.slice(1)}
-          </span>
-        </h1>
-      </div>
-
-      <div className="w-[90vw] min-h-[77vh] border-none rounded-md bg-light-background dark:bg-dark-background max-h-[50vh] overflow-y-scroll p-2 scroll-smooth overflow-x-hidden ">
+          </button>
+        </div>
+        <div className="w-full">
+          <h1 className="w-full font-title text-2xl rounded-md py-1 px-2 bg-light-secondary dark:bg-dark-secondary">
+            <span className="hidden lg:inline-block">
+              Preguntale a la{" "}
+              <span className="text-light-highlight dark:text-dark-highlight inline-block">
+                IA{" "}
+                <svg
+                  width="20px"
+                  height="20px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="inline-block"
+                >
+                  <path
+                    d="M18.5 8V3M5.5 21V16M16 5.5H21M3 18.5H8M6.5 2L5.71554 3.56892C5.45005 4.09989 5.31731 4.36538 5.13997 4.59545C4.98261 4.79959 4.79959 4.98261 4.59545 5.13997C4.36538 5.31731 4.0999 5.45005 3.56892 5.71554L2 6.5L3.56892 7.28446C4.0999 7.54995 4.36538 7.68269 4.59545 7.86003C4.79959 8.01739 4.98261 8.20041 5.13997 8.40455C5.31731 8.63462 5.45005 8.9001 5.71554 9.43108L6.5 11L7.28446 9.43108C7.54995 8.9001 7.68269 8.63462 7.86003 8.40455C8.01739 8.20041 8.20041 8.01739 8.40455 7.86003C8.63462 7.68269 8.9001 7.54995 9.43108 7.28446L11 6.5L9.43108 5.71554C8.9001 5.45005 8.63462 5.31731 8.40455 5.13997C8.20041 4.98261 8.01739 4.79959 7.86003 4.59545C7.68269 4.36538 7.54995 4.0999 7.28446 3.56892L6.5 2ZM17 12L16.0489 13.9022C15.7834 14.4332 15.6506 14.6987 15.4733 14.9288C15.3159 15.1329 15.1329 15.3159 14.9288 15.4733C14.6987 15.6506 14.4332 15.7834 13.9023 16.0489L12 17L13.9023 17.9511C14.4332 18.2166 14.6987 18.3494 14.9288 18.5267C15.1329 18.6841 15.3159 18.8671 15.4733 19.0712C15.6506 19.3013 15.7834 19.5668 16.0489 20.0977L17 22L17.9511 20.0978C18.2166 19.5668 18.3494 19.3013 18.5267 19.0712C18.6841 18.8671 18.8671 18.6841 19.0712 18.5267C19.3013 18.3494 19.5668 18.2166 20.0977 17.9511L22 17L20.0977 16.0489C19.5668 15.7834 19.3013 15.6506 19.0712 15.4733C18.8671 15.3159 18.6841 15.1329 18.5267 14.9288C18.3494 14.6987 18.2166 14.4332 17.9511 13.9023L17 12Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>{" "}
+              sobre el{" "}
+            </span>
+            <span className="text-light-heading lg:inline-block hidden ml-2">
+              {outputSections.projects[
+                selectedProject - 1
+              ].title[0].toLowerCase()}
+              {outputSections.projects[selectedProject - 1].title.slice(1)}
+            </span>
+            <span className="text-light-heading hidden sm:inline-block lg:hidden">
+              {outputSections.projects[selectedProject - 1].title}
+            </span>
+            <span className="text-light-heading inline-block sm:hidden text-[3.5vw]">
+              {" "}
+              {outputSections.projects[selectedProject - 1].title.split(":")[1]}
+            </span>
+          </h1>
+        </div>
+      </section>
+      <div className="w-full block flex-1 min-h-[70vh] max-h-[70vh] border-none rounded-md bg-light-background dark:bg-dark-background overflow-y-scroll p-2 scroll-smooth overflow-x-hidden ">
         {history.map((chat, index) => (
           <div
             key={index}
@@ -142,7 +154,7 @@ const ChatBot = () => {
         ))}
       </div>
       <form
-        className="flex gap-2 py-2 w-[90vw] absolute bottom-0 justify-center"
+        className="flex  gap-2 py-2 w-full bottom-0 justify-center"
         onSubmit={(e) => handleSend(e)}
       >
         <div className="flex items-center justify-start">
@@ -186,9 +198,9 @@ const ChatBot = () => {
           onChange={(e) => {
             setInput(e.target.value);
             e.target.style.height = "auto";
-            e.target.style.height = `${Math.min(e.target.scrollHeight, 208)}px`;
+            e.target.style.height = `${e.target.scrollHeight}px`;
           }}
-          className="w-[70vw] h-10 resize-none overflow-y-scroll no-scrollbar-b p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md"
+          className="w-[70vw] max-h-36 resize-none  overflow-y-scroll no-scrollbar-b p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md"
         />
         <div className="flex items-center justify-start">
           <button
