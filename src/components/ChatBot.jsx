@@ -38,7 +38,7 @@ const ChatBot = () => {
   };
 
   return (
-    <div className="px-3 flex flex-col justify-center items-center">
+    <div className="px-3 flex flex-col justify-center items-center chatbot">
       <div className="w-full flex gap-5 ">
         <button
           onClick={() => {
@@ -93,11 +93,11 @@ const ChatBot = () => {
         </h1>
       </div>
 
-      <div className="w-[90vw] min-h-[77vh] border-none rounded-md bg-light-background dark:bg-dark-background max-h-[50vh] overflow-y-scroll p-2 scroll-smooth overflow-x-hidden">
+      <div className="w-[90vw] min-h-[77vh] border-none rounded-md bg-light-background dark:bg-dark-background max-h-[50vh] overflow-y-scroll p-2 scroll-smooth overflow-x-hidden ">
         {history.map((chat, index) => (
           <div
             key={index}
-            className={`flex w-full ${
+            className={`flex w-full text-center sm:text-start ${
               index % 2 === 0 ? "justify-end" : "justify-start"
             }`}
           >
@@ -122,7 +122,7 @@ const ChatBot = () => {
                   </svg>
                 </h3>
                 <div
-                  className={`flex flex-col bg-light-secondary/20 dark:bg-dark-secondary/20 mx-1 my-2 w-fit rounded-md rounded-tl-none px-3 py-2`}
+                  className={`flex flex-col bg-light-secondary/20 dark:bg-dark-secondary/20 mx-1 my-2 w-full rounded-md rounded-tl-none px-3 py-2`}
                 >
                   <Markdown>{chat.parts[0].text}</Markdown>
                 </div>
@@ -153,7 +153,7 @@ const ChatBot = () => {
             }}
             className="px-2 py-1 hover:bg-light-highlight transition hover:dark:bg-dark-highlight rounded-md hidden lg:block "
           >
-            Eliminar Chat
+            Limpiar Chat
           </button>
           <button
             onClick={(e) => {

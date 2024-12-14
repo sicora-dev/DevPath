@@ -58,8 +58,9 @@ async function runChat(history, userInput, project) {
   - Maintain consistent spacing
   - Keep descriptions concise
   - Adapt complexity to experience level
-  - Add dividing lines and decorations to make it even more friendly
-  - Envolve code snippets in code blocks`;
+  - Add decorations to make it even more friendly
+  - Envolve code snippets in code blocks
+  - Use "aquí" as the link text and make it clickable instead of displaying the full URL`;
 
   const result = await chatSession.sendMessage(prompt);
   const response = result.response.text();

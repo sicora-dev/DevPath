@@ -43,7 +43,7 @@ const Header = () => {
         className={`
       items-center p-2 text-1xl 
       text-light-heading dark:text-dark-heading 
-      flex h-fit justify-around sticky 
+      flex h-14 justify-around sticky 
       bg-light-secondary/80 dark:bg-dark-secondary/20 
       top-0 z-50 transition-all duration-300
       ${isScrolled ? "backdrop-blur-sm" : ""}
