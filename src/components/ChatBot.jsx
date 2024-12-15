@@ -202,7 +202,7 @@ const ChatBot = () => {
                     </svg>
                   </h3>
                   <div
-                    className={`animate-appearance-in flex flex-col bg-light-secondary/20 dark:bg-dark-secondary/20 mx-1 my-2 w-full rounded-md rounded-tl-none px-3 py-2`}
+                    className={`animate-appearance-in flex flex-col bg-light-secondary/20 dark:bg-dark-secondary/20 mx-1 my-2 max-w-full rounded-md rounded-tl-none px-3 py-2`}
                   >
                     <Typewriter text={chat.parts[0].text} />
                   </div>

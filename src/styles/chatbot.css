@@ -1,5 +1,5 @@
 .chatbot pre {
-  @apply bg-light-background/30 dark:bg-dark-background/30;
+  background: rgb(40, 44, 52);
   display: block;
   margin: 1rem;
   margin-left: 0;
@@ -11,6 +11,15 @@
   overflow-x: auto;
   white-space: pre;
 }
+
+.chatbot pre >  code {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  max-width: 0;
+  display: block;
+  font-weight: bold;
+}
+
 .chatbot pre > div  code {
   padding: 1rem;
   border-radius: 0.375rem;
