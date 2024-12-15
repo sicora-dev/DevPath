@@ -313,14 +313,14 @@ const MainIAComp = () => {
           </button>
         </form>
       )}
-      {!selectedProject && output && (
+      {!selectedProject && (
         <section className="relative min-w-[300px] w-fit flex flex-col items-center">
           <div
             id="output"
             className="w-full h-full rounded-md overflow-y-scroll scrollbar-hide p-5"
             data-testid="skeleton-loader"
           >
-            {loading && <SkeletonCards />}
+            {loading && !output && <SkeletonCards />}
             {output && !selectedProject && !loading && (
               <section className="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-2 gap-5 w-full ">
                 <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
