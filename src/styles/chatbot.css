@@ -1,5 +1,4 @@
 .chatbot pre {
-  @apply bg-light-background/30 dark:bg-dark-background/30;
   display: block;
   margin: 1rem;
   margin-left: 0;

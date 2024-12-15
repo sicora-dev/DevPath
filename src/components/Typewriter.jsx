@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeRewrite from "rehype-rewrite";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Context } from "../context/Context";
 
 const Typewriter = ({ text }) => {
@@ -41,7 +43,28 @@ const Typewriter = ({ text }) => {
   };
 
   return (
-    <ReactMarkdown rehypePlugins={[rehypeRaw, rewriteLinks]}>
+    <ReactMarkdown
+      rehypePlugins={[rehypeRaw]}
+      components={{
+        code({ node, inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || '');
+          return !inline && match ? (
+            <SyntaxHighlighter
+              style={oneDark}
+              language={match[1]}
+              PreTag="div"
+              {...props}
+            >
+              {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
+          ) : (
+            <code className={className} {...props}>
+              {children}
+            </code>
+          );
+        }
+      }}
+    >
       {displayedText}
     </ReactMarkdown>
   );
