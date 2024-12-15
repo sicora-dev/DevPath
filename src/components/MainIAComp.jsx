@@ -311,143 +311,145 @@ const MainIAComp = () => {
           </button>
         </form>
       )}
-
-      <section className="relative min-w-[300px] w-fit flex flex-col items-center">
-        <div
-          id="output"
-          className="w-full h-full rounded-md overflow-y-scroll scrollbar-hide p-5"
-          data-testid="skeleton-loader"
-        >
-          {loading && <SkeletonCards />}
-          {output && !selectedProject && !loading && (
-            <section className="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-2 gap-5 w-full ">
-              <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
-                <CardHeader className="flex gap-3 justify-center">
-                  <Image
-                    alt="nextui logo"
-                    height={40}
-                    radius="sm"
-                    src="https://img.icons8.com/emoji/48/bullseye.png"
-                    width={40}
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-lg font-bold">
-                      <ReactMarkdown className="text-center">
-                        {outputSections.intro.title}
-                      </ReactMarkdown>
-                    </p>
-                  </div>
-                </CardHeader>
-                <Divider />
-                <CardBody>
-                  <ReactMarkdown className="text-center">
-                    {outputSections.intro.body}
-                  </ReactMarkdown>
-                </CardBody>
-                <Divider />
-              </Card>
-
-              {/**/}
-
-              <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-start place-self-center">
-                <CardHeader className="flex gap-3 justify-center">
-                  <Image
-                    alt="nextui logo"
-                    height={40}
-                    radius="sm"
-                    src="https://img.icons8.com/emoji/96/bar-chart-emoji.png"
-                    width={40}
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-lg font-bold">
-                      <ReactMarkdown className="text-center">
-                        {outputSections.analysis.title}
-                      </ReactMarkdown>
-                    </p>
-                  </div>
-                </CardHeader>
-                <Divider />
-                <CardBody>
-                  <ReactMarkdown className="text-center">
-                    {outputSections.analysis.body}
-                  </ReactMarkdown>
-                </CardBody>
-                <Divider />
-              </Card>
-
-              {/*  */}
-
-              <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
-                <CardHeader className="flex gap-3 justify-center">
-                  <Image
-                    alt="nextui logo"
-                    height={40}
-                    radius="sm"
-                    src="https://img.icons8.com/emoji/96/motorway.png"
-                    width={40}
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-lg font-bold">
-                      <ReactMarkdown className="text-center">
-                        {outputSections.roadmap.title}
-                      </ReactMarkdown>
-                    </p>
-                  </div>
-                </CardHeader>
-                <Divider />
-                <CardBody>
-                  <ReactMarkdown className="text-center">
-                    {outputSections.roadmap.body}
-                  </ReactMarkdown>
-                </CardBody>
-
-                <Divider />
-              </Card>
-
-              {/*  */}
-
-              <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-start place-self-center">
-                <CardHeader className="flex gap-3 justify-center">
-                  <Image
-                    alt="nextui logo"
-                    height={40}
-                    radius="sm"
-                    src="https://img.icons8.com/emoji/96/old-key.png"
-                    width={40}
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-lg font-bold">
-                      <ReactMarkdown className="text-center">
-                        {outputSections.tips.title}
-                      </ReactMarkdown>
-                    </p>
-                  </div>
-                </CardHeader>
-                <Divider />
-                <CardBody>
-                  <ReactMarkdown className="text-center">
-                    {outputSections.tips.body}
-                  </ReactMarkdown>
-                </CardBody>
-                <Divider />
-              </Card>
-
-              {/*  */}
-            </section>
-          )}
-        </div>
-        {output && !selectedProject && !loading && (
-          <button
-            aria-label="Take a photo"
-            color="currentColor"
-            className="absolute z-20 right-2 top-2 rounded-xl p-2 border-light-highlight/30 dark:border-dark-highlight/30 border-2 hover:border-light-highlight
-            dark:hover:border-dark-highlight transition ease-in-out bg-light-secondary/20 dark:bg-dark-secondary/20 text-light-highlight"
-            onClick={downloadPDF}
+      {!selectedProject && output && (
+        <section className="relative min-w-[300px] w-fit flex flex-col items-center">
+          <div
+            id="output"
+            className="w-full h-full rounded-md overflow-y-scroll scrollbar-hide p-5"
+            data-testid="skeleton-loader"
           >
-            <CameraIcon />
-          </button>
-        )}
-      </section>
+            {loading && <SkeletonCards />}
+            {output && !selectedProject && !loading && (
+              <section className="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-2 gap-5 w-full ">
+                <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
+                  <CardHeader className="flex gap-3 justify-center">
+                    <Image
+                      alt="nextui logo"
+                      height={40}
+                      radius="sm"
+                      src="https://img.icons8.com/emoji/48/bullseye.png"
+                      width={40}
+                    />
+                    <div className="flex flex-col">
+                      <p className="text-lg font-bold">
+                        <ReactMarkdown className="text-center">
+                          {outputSections.intro.title}
+                        </ReactMarkdown>
+                      </p>
+                    </div>
+                  </CardHeader>
+                  <Divider />
+                  <CardBody>
+                    <ReactMarkdown className="text-center">
+                      {outputSections.intro.body}
+                    </ReactMarkdown>
+                  </CardBody>
+                  <Divider />
+                </Card>
+
+                {/**/}
+
+                <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-start place-self-center">
+                  <CardHeader className="flex gap-3 justify-center">
+                    <Image
+                      alt="nextui logo"
+                      height={40}
+                      radius="sm"
+                      src="https://img.icons8.com/emoji/96/bar-chart-emoji.png"
+                      width={40}
+                    />
+                    <div className="flex flex-col">
+                      <p className="text-lg font-bold">
+                        <ReactMarkdown className="text-center">
+                          {outputSections.analysis.title}
+                        </ReactMarkdown>
+                      </p>
+                    </div>
+                  </CardHeader>
+                  <Divider />
+                  <CardBody>
+                    <ReactMarkdown className="text-center">
+                      {outputSections.analysis.body}
+                    </ReactMarkdown>
+                  </CardBody>
+                  <Divider />
+                </Card>
+
+                {/*  */}
+
+                <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">
+                  <CardHeader className="flex gap-3 justify-center">
+                    <Image
+                      alt="nextui logo"
+                      height={40}
+                      radius="sm"
+                      src="https://img.icons8.com/emoji/96/motorway.png"
+                      width={40}
+                    />
+                    <div className="flex flex-col">
+                      <p className="text-lg font-bold">
+                        <ReactMarkdown className="text-center">
+                          {outputSections.roadmap.title}
+                        </ReactMarkdown>
+                      </p>
+                    </div>
+                  </CardHeader>
+                  <Divider />
+                  <CardBody>
+                    <ReactMarkdown className="text-center">
+                      {outputSections.roadmap.body}
+                    </ReactMarkdown>
+                  </CardBody>
+
+                  <Divider />
+                </Card>
+
+                {/*  */}
+
+                <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-start place-self-center">
+                  <CardHeader className="flex gap-3 justify-center">
+                    <Image
+                      alt="nextui logo"
+                      height={40}
+                      radius="sm"
+                      src="https://img.icons8.com/emoji/96/old-key.png"
+                      width={40}
+                    />
+                    <div className="flex flex-col">
+                      <p className="text-lg font-bold">
+                        <ReactMarkdown className="text-center">
+                          {outputSections.tips.title}
+                        </ReactMarkdown>
+                      </p>
+                    </div>
+                  </CardHeader>
+                  <Divider />
+                  <CardBody>
+                    <ReactMarkdown className="text-center">
+                      {outputSections.tips.body}
+                    </ReactMarkdown>
+                  </CardBody>
+                  <Divider />
+                </Card>
+
+                {/*  */}
+              </section>
+            )}
+          </div>
+          {output && !selectedProject && !loading && (
+            <button
+              aria-label="Take a photo"
+              color="currentColor"
+              className="absolute z-20 right-2 top-2 rounded-xl p-2 border-light-highlight/30 dark:border-dark-highlight/30 border-2 hover:border-light-highlight
+    dark:hover:border-dark-highlight transition ease-in-out bg-light-secondary/20 dark:bg-dark-secondary/20 text-light-highlight"
+              onClick={downloadPDF}
+            >
+              <CameraIcon />
+            </button>
+          )}
+        </section>
+      )}
+
       {output && !selectedProject && !loading && (
         <ProjectCarousel projects={outputSections.projects} />
       )}

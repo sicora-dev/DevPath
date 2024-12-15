@@ -180,7 +180,7 @@ async function run(stack, skill, observations, restricted) {
   - ⚡ Dificultad: [X/10]
   |||
   
-  [Los nombres de los proyecots deben ser claros y concisos]
+  [Los nombres de los proyecots deben ser claros y concisos, máximo 40 caracteres]
   [Repetir estructura para proyectos 2-5 con §§§ entre cada uno]
   [Mostrar dificultad sobre 10, siendo 1 el más fácil y 10 el más difícil]
   [Seguir estrictamente la plantilla sin agregar estilos o formatos adicionales]

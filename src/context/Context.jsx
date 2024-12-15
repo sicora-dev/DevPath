@@ -1,6 +1,5 @@
 import { useState,createContext } from "react";
 import { run, runChat } from "../config/gemini.js";
-import { text } from "framer-motion/client";
 
 export const Context = createContext();
 
@@ -73,20 +72,27 @@ const ContextProvider = (props) => {
     }
 
     const onChatbotSent = async () => {
-        setLoadingChat(true);
-        const result = await runChat(history, input, outputSections.projects[selectedProject-1]);
-        console.log(outputSections.projects[selectedProject-1]);
-        setChatBotOutput(result);
-        setLoadingChat(false);
-        console.log(result)
-        console.log(input)
-        setHistory(prevHistory => [
-            ...prevHistory,
-            { role: "model", parts: [{ text: result }] }
+      setLoadingChat(true);
+      try {
+          const result = await runChat(history, input, outputSections.projects[selectedProject-1]);
+          
+          setChatBotOutput(result);
+          setHistory(prevHistory => [
+              ...prevHistory,
+              { role: "model", parts: [{ text: result }] }
           ]);
-        console.log(history);
-        setInput("");
-    }
+          
+      } catch (error) {
+          console.error(error);
+          setHistory(prevHistory => [
+              ...prevHistory,
+              { role: "model", parts: [{ text: "Error, intentalo de nuevo mas tarde" }] }
+          ]);
+      } finally {
+          setLoadingChat(false);
+          setInput("");
+      }
+  }
 
     const contextValue = {
         stack,
@@ -100,6 +106,7 @@ const ContextProvider = (props) => {
         selectedProject,
         setSelectedProject,
         loading,
+        loadingChat,
         input,
         setInput,
         output,
