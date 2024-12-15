@@ -5,12 +5,22 @@ import rehypeRewrite from "rehype-rewrite";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Context } from "../context/Context";
+import { useMediaQuery } from 'react-responsive';
 
 const Typewriter = ({ text }) => {
   const { writing, setWriting } = useContext(Context);
   const [displayedText, setDisplayedText] = useState("");
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 640px)' });
+
 
   useEffect(() => {
+
+    if (isSmallScreen) {
+      setDisplayedText(text);
+      setWriting(false);
+      return;
+    }
+
     let index = 0;
     setWriting(true);
   
@@ -24,7 +34,7 @@ const Typewriter = ({ text }) => {
         clearInterval(interval);
         setWriting(false);
       }
-    }, 0); // Ajusta el tiempo del intervalo según sea necesario
+    }, 0.2);
   
     return () => {
       clearInterval(interval);
