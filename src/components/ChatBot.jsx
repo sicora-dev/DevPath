@@ -1,6 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState, useCallback } from "react";
 import { Context } from "../context/Context";
-import ReactMarkdown from "react-markdown";
 
 import Typewriter from "./Typewriter";
 import "../styles/chatbot.css";
@@ -35,34 +34,20 @@ const ChatBot = () => {
 
   const [textareaFocused, setTextareaFocused] = useState(false);
   const [showTextarea, setShowTextarea] = useState(true);
-  const [animateTextarea, setAnimateTextarea] = useState(false);
-  const [animateCount, setAnimateCount] = useState(0);
-  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (history.length === 0) {
       setShowTextarea(true);
-    } else {
-      setAnimateCount(animateCount + 1);
     }
-
-    if (animateCount === 1) {
-      setShowTextarea(false);
-      document
-        .getElementsByTagName("textarea")[0]
-        .classList.add("animate-bounce");
-    }
-
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    
   }, [history]);
 
-  const handleSend = (e) => {
+  const handleSend = useCallback((e) => {
     e.preventDefault();
     onChatbotSent();
-    setHistory([...history, { role: "user", parts: [{ text: input }] }]);
-  };
+    setHistory((prevHistory) => [...prevHistory, { role: "user", parts: [{ text: input }] }]);
+  }, [onChatbotSent, input, setHistory]);
+
   const handleMouseLeave = () => {
     if (!textareaFocused && history.length > 0) {
       setTimeout(() => {
@@ -84,8 +69,23 @@ const ChatBot = () => {
   }, [showTextarea]);
 
   useEffect(() => {
-    console.log(loadingChat);
-  }, [loadingChat]);
+    const handleKeyPress = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!loadingChat) {
+          handleSend(e);
+          document.getElementsByTagName("textarea")[0].value = "";
+        }
+      }
+    };
+  
+    window.addEventListener("keypress", handleKeyPress);
+  
+    return () => {
+      window.removeEventListener("keypress", handleKeyPress);
+    };
+  }, [loadingChat, handleSend]);
+
 
   return (
     <div className="px-3 flex-1 relative flex-col grid-cols-1 min-h-[93vh] overflow-hidden w-full chatbot">
@@ -100,8 +100,8 @@ const ChatBot = () => {
       >
         <div className="flex items-center justify-start">
           <button
+          aria-label="Volver a la lista de proyectos"
             onClick={() => {
-              setAnimateCount(0);
               setSelectedProject(null);
               setHistory([]);
             }}
@@ -166,7 +166,7 @@ const ChatBot = () => {
       </section>
       <div className=" flex flex-col h-full">
         <div
-          className="w-full block flex-1 max-h-[84vh] border-none rounded-md bg-light-background dark:bg-dark-background overflow-y-scroll p-2 overflow-x-hidden scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md flex-grow"
+          className="chat w-full block flex-1 max-h-[84vh] border-none rounded-md bg-light-background dark:bg-dark-background overflow-y-scroll p-2 overflow-x-hidden scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md flex-grow"
           onClick={() => {
             handleClickOutside();
           }}
@@ -221,7 +221,6 @@ const ChatBot = () => {
               )}
             </div>
           ))}
-          <div ref={messagesEndRef} />
           {loadingChat && (
             <div
               className={`flex w-full text-center sm:text-start justify-start
@@ -257,7 +256,7 @@ const ChatBot = () => {
           )}
         </div>
         <form
-          className={`absolute flex gap-1 py-2 w-full min-h-36 left-0 -bottom-12 ${
+          className={`absolute flex gap-1 py-2 w-full max-h-36 left-0 -bottom-12 ${
             showTextarea ? "bottom-0" : ""
           } transition-all ease-in-out items-end justify-center`}
           onSubmit={(e) => {
@@ -269,12 +268,20 @@ const ChatBot = () => {
             setShowTextarea(false);
           }}
         >
+          <div
+            className="h-2 bg-light-highlight w-32 rounded-md absolute bottom-[4.6rem]"
+            onMouseLeave={() => handleMouseLeave()}
+            onMouseEnter={() => setShowTextarea(true)}
+            onTouchStart={() => {
+              setShowTextarea(true);
+            }}
+          ></div>
           <div className="flex justify-start">
-            
             <button
+              aria-label="Limpiar historial de chat"
               onClick={(e) => {
                 e.preventDefault();
-                setAnimateCount(0);
+
                 setHistory([]);
               }}
               className="px-2 py-1 sm:hover:bg-light-highlight sm:hover:dark:bg-dark-highlight rounded-md dark:bg-dark-highlight bg-light-highlight hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out"
@@ -297,9 +304,13 @@ const ChatBot = () => {
               </svg>
             </button>
           </div>
+          <label htmlFor="chatbot-input" className="sr-only"></label>
           <textarea
+            
+            id="chatbot-input"
             type="text"
             value={input}
+            placeholder={`${showTextarea ? "Haz click fuera para esconder" : "Click o arrastra para mostrar"}`}
             onChange={(e) => {
               setInput(e.target.value);
               e.target.style.height = "auto";
@@ -313,16 +324,13 @@ const ChatBot = () => {
             onMouseEnter={() => setShowTextarea(true)}
             onTouchStart={() => {
               setShowTextarea(true);
-              document
-                .getElementsByTagName("textarea")[0]
-                .classList.remove("animate-bounce");
             }}
-            
             className="w-[70vw] max-h-40 resize-none overflow-y-scroll p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md"
           />
+          
           <div className="flex justify-start">
-            
             <button
+              aria-label="Enviar mensaje"
               type="submit"
               className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out"
               onClick={() => {

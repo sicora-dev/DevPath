@@ -13,6 +13,7 @@ const ContextProvider = (props) => {
     const [selectedProject, setSelectedProject] = useState("");
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState(false);
+    const [writing, setWriting] = useState(false);
     const [output, setOutput] = useState("");
     const [outputLoaded, setOutputLoaded] = useState(false);
     const [chatBotOutput, setChatBotOutput] = useState("");
@@ -109,6 +110,8 @@ const ContextProvider = (props) => {
         loadingChat,
         input,
         setInput,
+        writing,
+        setWriting,
         output,
         setOutput,
         outputLoaded, 

@@ -276,7 +276,7 @@ const MainIAComp = () => {
             }}
           />
           <label
-            htmlFor="experience"
+            htmlFor="observations"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
             Observaciones
@@ -304,8 +304,10 @@ const MainIAComp = () => {
             }}
           />
           <button
+            aria-label="Enviar"
             type="submit"
-            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2"
+            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2 disabled:bg-light-secondary dark:disabled:bg-dark-secondary disabled:cursor-not-allowed focus:bg-light-secondary dark:focus:bg-dark-secondary focus:outline-none"
+            disabled={loading}
           >
             Enviar
           </button>
@@ -438,7 +440,7 @@ const MainIAComp = () => {
           </div>
           {output && !selectedProject && !loading && (
             <button
-              aria-label="Take a photo"
+              aria-label="Guardar en PDF"
               color="currentColor"
               className="absolute z-20 right-2 top-2 rounded-xl p-2 border-light-highlight/30 dark:border-dark-highlight/30 border-2 hover:border-light-highlight
     dark:hover:border-dark-highlight transition ease-in-out bg-light-secondary/20 dark:bg-dark-secondary/20 text-light-highlight"

@@ -63,7 +63,7 @@ async function runChat(history, userInput, project) {
   - Use "aquí" as the link text and make it clickable instead of displaying the full URL`;
 
   const result = await chatSession.sendMessage(prompt);
-  const response = result.response.text();
+  const response = await result.response.text();
   return response;
 }
 

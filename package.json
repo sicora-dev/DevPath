@@ -35,6 +35,8 @@
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "react-tooltip": "^5.28.0",
+    "rehype-raw": "^7.0.0",
+    "rehype-rewrite": "^4.0.2",
     "tailwind-scrollbar": "^3.1.0"
   },
   "devDependencies": {
