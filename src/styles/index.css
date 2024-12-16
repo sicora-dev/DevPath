@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  @apply bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text;
+  @apply bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md;
   font-family: "Inter", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

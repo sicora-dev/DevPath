@@ -1,7 +1,5 @@
 import {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
+  GoogleGenerativeAI
 } from "@google/generative-ai";
 
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -60,7 +58,7 @@ async function runChat(history, userInput, project) {
   - Adapt complexity to experience level
   - Add decorations to make it even more friendly
   - Envolve code snippets in code blocks
-  - Use "aquí" as the link text and make it clickable instead of displaying the full URL`;
+  - Use text and make it clickable instead of displaying the full URL`;
 
   const result = await chatSession.sendMessage(prompt);
   const response = await result.response.text();

@@ -1,15 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { useState, useContext, useEffect } from "react";
+import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
-import { Button, ButtonGroup } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
+
 import { Image } from "@nextui-org/image";
-import { ScrollShadow } from "@nextui-org/scroll-shadow";
-import { Skeleton } from "@nextui-org/skeleton";
 import { Switch } from "@nextui-org/react";
 import { Context } from "../context/Context";
-import { marked } from "marked";
-import DOMPurify from "dompurify";
 import { CameraIcon } from "../photobutton/CameraIcon";
 import ProjectCarousel from "./ProjectCarousel";
 import ExampleProjectCarousel from "./ExampleProjectCarousel";
@@ -20,7 +15,6 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import SkeletonCards from "./SkeletonCards";
 import ChatBot from "./ChatBot";
-import { use } from "react";
 
 const MainIAComp = () => {
   const {
@@ -30,14 +24,10 @@ const MainIAComp = () => {
     setSkill,
     observations,
     setObservations,
-    history,
-    setHistory,
     selectedProject,
-    setSelectedProject,
     loading,
     output,
     setOutput,
-    outputLoaded,
     outputSections,
     setOutputSections,
     setOutputLoaded,
@@ -320,7 +310,7 @@ const MainIAComp = () => {
             className="w-full h-full rounded-md overflow-y-scroll scrollbar-hide p-5"
             data-testid="skeleton-loader"
           >
-            {loading && !output && <SkeletonCards />}
+            {loading && <SkeletonCards />}
             {output && !selectedProject && !loading && (
               <section className="grid lg:grid-cols-2 grid-cols-1 lg:grid-rows-2 gap-5 w-full ">
                 <Card className="w-full h-fit lg:h-full max-w-[400px] dark:bg-dark-secondary bg-light-secondary lg:place-self-end place-self-center">

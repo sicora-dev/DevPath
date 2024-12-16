@@ -3,24 +3,27 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Image,
-  Link,
   Divider,
 } from "@nextui-org/react";
 import { Context } from "../context/Context";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useContext, useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import DOMPurify from "dompurify";
 import { ShowMoreicon } from "../showmorebutton/ShowMoreIcon";
 import { Tooltip } from "react-tooltip";
-import { use } from "react";
 
 const ProjectCarousel = ({ projects }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, jump: true });
   const [showMore, setShowMore] = useState(false);
-  const { outputLoaded, setSelectedProject } = useContext(Context);
-  const [actualProject, setActualProject] = useState(1);
+  const { 
+    outputLoaded, 
+    setSelectedProject, 
+    setShowModal,
+    actualProject,
+    setActualProject,
+    setHistory
+  } = useContext(Context);
+ 
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -40,8 +43,18 @@ const ProjectCarousel = ({ projects }) => {
   };
 
   const handleChat = () => {
-    console.log(actualProject);
-    setSelectedProject(actualProject);
+    const storedProject = parseInt(sessionStorage.getItem("selectedProject"));
+    const chatHistory = JSON.parse(sessionStorage.getItem("chatHistory"));
+    console.log(storedProject, actualProject);
+    if (!storedProject || !chatHistory) {
+      sessionStorage.setItem("selectedProject", actualProject);
+    }else if(storedProject !== actualProject && chatHistory){
+      setShowModal(true);
+    }else if(storedProject === actualProject){
+      setShowModal(false);
+      setHistory(chatHistory);
+    }
+   setSelectedProject(actualProject);
   };
 
   useEffect(() => {
@@ -49,11 +62,11 @@ const ProjectCarousel = ({ projects }) => {
       const onSelect = () => {
         const selectedIndex = emblaApi.selectedScrollSnap();
         setActualProject(selectedIndex + 1);
-        console.log(actualProject);
+       
       };
       emblaApi.on("select", onSelect);
       onSelect();
-      console.log(actualProject);
+      
     }
   }, [actualProject, emblaApi]);
 

@@ -1,52 +1,85 @@
-import { useContext, useEffect, useRef, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { Context } from "../context/Context";
-
+import Modal from "./Modal";
 import Typewriter from "./Typewriter";
 import "../styles/chatbot.css";
 
 const ChatBot = () => {
   const {
-    stack,
-    setStack,
-    skill,
-    setSkill,
-    observations,
-    setObservations,
     history,
     setHistory,
     selectedProject,
     setSelectedProject,
-    loading,
+
     loadingChat,
     input,
     setInput,
-    output,
-    setOutput,
+    showModal,
+    setShowModal,
+    actualProject,
     outputSections,
-    setOutputSections,
-    chatBotOutput,
-    setChatBotOutput,
-    outputLoaded,
-    setOutputLoaded,
-    onSent,
     onChatbotSent,
   } = useContext(Context);
 
   const [textareaFocused, setTextareaFocused] = useState(false);
   const [showTextarea, setShowTextarea] = useState(true);
 
+  const handleRecoverChat = () => {
+    const storedProject = sessionStorage.getItem("selectedProject");
+    const storedHistory = sessionStorage.getItem("chatHistory");
+    if (storedProject) {
+      setSelectedProject(JSON.parse(storedProject));
+    }
+    if (storedHistory) {
+      setHistory(JSON.parse(storedHistory));
+    }
+    setShowModal(false);
+  };
+
+  const handleNewChat = () => {
+    sessionStorage.setItem("selectedProject", actualProject);
+    sessionStorage.removeItem("chatHistory");
+    setShowModal(false);
+  };
+
   useEffect(() => {
-    if (history.length === 0) {
+    if (history && history.length === 0) {
       setShowTextarea(true);
     }
-    
+
+    const updateLinks = () => {
+      const links = document.getElementsByTagName("a");
+      for (let i = 0; i < links.length; i++) {
+        links[i].target = "_blank";
+      }
+      console.log("Links updated with target='_blank'");
+    };
+
+    updateLinks();
+
+    const observer = new MutationObserver(updateLinks);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+    };
   }, [history]);
 
-  const handleSend = useCallback((e) => {
-    e.preventDefault();
-    onChatbotSent();
-    setHistory((prevHistory) => [...prevHistory, { role: "user", parts: [{ text: input }] }]);
-  }, [onChatbotSent, input, setHistory]);
+  const handleSend = useCallback(
+    (e) => {
+      e.preventDefault();
+      onChatbotSent();
+      sessionStorage.setItem(
+        "chatHistory",
+        JSON.stringify([...history, { role: "user", parts: [{ text: input }] }])
+      );
+      setHistory((prevHistory) => [
+        ...prevHistory,
+        { role: "user", parts: [{ text: input }] },
+      ]);
+    },
+    [onChatbotSent, input, setHistory, history]
+  );
 
   const handleMouseLeave = () => {
     if (!textareaFocused && history.length > 0) {
@@ -70,25 +103,54 @@ const ChatBot = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === "Enter") {
+      if (
+        e.key === "Enter" &&
+        !e.shiftKey &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        !e.metaKey
+      ) {
         e.preventDefault();
         if (!loadingChat) {
           handleSend(e);
-          document.getElementsByTagName("textarea")[0].value = "";
+          const textarea = document.getElementsByTagName("textarea");
+          textarea.innerHTML = ".";
+          
+          
         }
       }
     };
-  
+
     window.addEventListener("keypress", handleKeyPress);
-  
+
     return () => {
       window.removeEventListener("keypress", handleKeyPress);
     };
   }, [loadingChat, handleSend]);
 
-
   return (
     <div className="px-3 flex-1 relative flex-col grid-cols-1 min-h-[93vh] overflow-hidden w-full chatbot">
+      {showModal && (
+        <Modal>
+          <h2 className="text-xl font-bold mb-4">
+            ¿Desea recuperar el chat anterior o iniciar uno nuevo?
+          </h2>
+          <div className="flex space-x-4">
+            <button
+              onClick={handleRecoverChat}
+              className="bg-light-highlight hover:bg-light-secondary/30 hover:dark:bg-dark-background/30 px-4 py-2 rounded-md"
+            >
+              Recuperar
+            </button>
+            <button
+              onClick={handleNewChat}
+              className="bg-light-background dark:bg-dark-background hover:bg-light-secondary/30 hover:dark:bg-dark-background/30 text-white px-4 py-2 rounded-md"
+            >
+              Nuevo chat
+            </button>
+          </div>
+        </Modal>
+      )}
       <section
         className="flex sm:w-max items-center gap-2 py-2 justify-start"
         onClick={() => {
@@ -100,7 +162,7 @@ const ChatBot = () => {
       >
         <div className="flex items-center justify-start">
           <button
-          aria-label="Volver a la lista de proyectos"
+            aria-label="Volver a la lista de proyectos"
             onClick={() => {
               setSelectedProject(null);
               setHistory([]);
@@ -174,7 +236,7 @@ const ChatBot = () => {
             setShowTextarea(false);
           }}
         >
-          {history.map((chat, index) => (
+          {history?.map((chat, index) => (
             <div
               key={index}
               className={`flex w-full text-center sm:text-start ${
@@ -268,21 +330,13 @@ const ChatBot = () => {
             setShowTextarea(false);
           }}
         >
-          <div
-            className="h-2 bg-light-highlight w-32 rounded-md absolute bottom-[4.6rem]"
-            onMouseLeave={() => handleMouseLeave()}
-            onMouseEnter={() => setShowTextarea(true)}
-            onTouchStart={() => {
-              setShowTextarea(true);
-            }}
-          ></div>
           <div className="flex justify-start">
             <button
               aria-label="Limpiar historial de chat"
               onClick={(e) => {
                 e.preventDefault();
-
                 setHistory([]);
+                sessionStorage.removeItem("chatHistory");
               }}
               className="px-2 py-1 sm:hover:bg-light-highlight sm:hover:dark:bg-dark-highlight rounded-md dark:bg-dark-highlight bg-light-highlight hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out"
             >
@@ -304,35 +358,49 @@ const ChatBot = () => {
               </svg>
             </button>
           </div>
-          <label htmlFor="chatbot-input" className="sr-only"></label>
-          <textarea
-            
-            id="chatbot-input"
-            type="text"
-            value={input}
-            placeholder={`${showTextarea ? "Haz click fuera para esconder" : "Click o arrastra para mostrar"}`}
-            onChange={(e) => {
-              setInput(e.target.value);
-              e.target.style.height = "auto";
-              e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
-            onFocus={() => {
-              setTextareaFocused(true);
-              setShowTextarea(true);
-            }}
-            onMouseLeave={() => handleMouseLeave()}
-            onMouseEnter={() => setShowTextarea(true)}
-            onTouchStart={() => {
-              setShowTextarea(true);
-            }}
-            className="w-[70vw] max-h-40 resize-none overflow-y-scroll p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md"
-          />
-          
+          <div className="relative flex">
+            <div
+              className="h-2 bg-light-highlight w-32 rounded-md absolute -top-3 right-[calc(50%-4rem)]"
+              onMouseLeave={() => handleMouseLeave()}
+              onMouseEnter={() => setShowTextarea(true)}
+              onTouchStart={() => {
+                setShowTextarea(true);
+              }}
+            ></div>
+            <label htmlFor="chatbot-input" className="sr-only"></label>
+            <textarea
+              id="chatbot-input"
+              type="text"
+              value={input}
+              placeholder={`${
+                showTextarea
+                  ? "Haz click fuera para esconder"
+                  : "Click o arrastra para mostrar"
+              }`}
+              onChange={(e) => {
+                setInput(e.target.value);
+                e.target.style.height = "auto";
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+              onFocus={() => {
+                setTextareaFocused(true);
+                setShowTextarea(true);
+              }}
+              onMouseLeave={() => handleMouseLeave()}
+              onMouseEnter={() => setShowTextarea(true)}
+              onTouchStart={() => {
+                setShowTextarea(true);
+              }}
+              className="w-[70vw] h-[48px] max-h-40 resize-none overflow-y-scroll p-2 rounded-md border-none bg-light-secondary dark:bg-dark-secondary focus:outline outline-light-highlight scroll-smooth scrollbar-thumb-light-highlight scrollbar-w-3 scrollbar scrollbar-thumb-rounded-md"
+            />
+          </div>
+
           <div className="flex justify-start">
             <button
               aria-label="Enviar mensaje"
               type="submit"
-              className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out"
+              className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out disabled:bg-light-secondary disabled:dark:bg-dark-secondary"
+              disabled={loadingChat}
               onClick={() => {
                 setShowTextarea(false);
               }}

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
 import MainIAComp from "./components/MainIAComp";
 import Header from "./components/Header";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const App = () => {
   return (

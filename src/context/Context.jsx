@@ -17,6 +17,8 @@ const ContextProvider = (props) => {
     const [output, setOutput] = useState("");
     const [outputLoaded, setOutputLoaded] = useState(false);
     const [chatBotOutput, setChatBotOutput] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [actualProject, setActualProject] = useState(1);
     const [outputSections, setOutputSections] = useState({
         intro: {
           title: "",
@@ -78,10 +80,14 @@ const ContextProvider = (props) => {
           const result = await runChat(history, input, outputSections.projects[selectedProject-1]);
           
           setChatBotOutput(result);
-          setHistory(prevHistory => [
+          setHistory(prevHistory => {
+            const updatedHistory = [
               ...prevHistory,
               { role: "model", parts: [{ text: result }] }
-          ]);
+            ];
+            sessionStorage.setItem("chatHistory", JSON.stringify(updatedHistory));
+            return updatedHistory;
+          });
           
       } catch (error) {
           console.error(error);
@@ -110,6 +116,10 @@ const ContextProvider = (props) => {
         loadingChat,
         input,
         setInput,
+        showModal,
+        setShowModal,
+        actualProject,
+        setActualProject,
         writing,
         setWriting,
         output,

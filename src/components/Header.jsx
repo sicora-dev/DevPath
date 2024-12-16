@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Button, ButtonGroup } from "@nextui-org/button";
+import { useEffect, useState, useContext } from "react";
 import { GithubIcon } from "../githubbutton/GithubIcon";
 import {Switch} from "@nextui-org/react";
 import { MoonIcon } from "../switch/MoonIcon";
