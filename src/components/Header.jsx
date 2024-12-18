@@ -4,8 +4,10 @@ import {Switch} from "@nextui-org/react";
 import { MoonIcon } from "../switch/MoonIcon";
 import { SunIcon } from "../switch/SunIcon";
 import { Context } from "../context/Context";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+  const { t } = useTranslation();
   const { selectedProject } = useContext(Context);
 
   const [darkMode, setDarkMode] = useState(
@@ -77,12 +79,12 @@ const Header = () => {
       </nav>
       {!selectedProject && (
         <main className="flex flex-col items-center py-5 px-1 my-5">
-          <h2 className="w-[70%] text-xl text-center mt-2 font-semibold">
-            Tu{" "}
+           <h2 className="w-[70%] text-xl text-center mt-2 font-semibold">
+            {t("header.part1")}{" "}
             <span className="text-light-highlight dark:text-dark-highlight">
-              mentor personal
+              {t("header.part2")}
             </span>{" "}
-            de programación impulsado por{" "}
+            {t("header.part3")}{" "}
             <span className="text-light-highlight dark:text-dark-highlight inline-block">
               IA{" "}
               <svg
@@ -102,15 +104,15 @@ const Header = () => {
                 />
               </svg>
             </span>{" "}
-            - Obtén una ruta personalizada de{" "}
+            {t("header.part4")}{" "}
             <span className="text-light-highlight dark:text-dark-highlight">
-              5 proyectos
+              {t("header.part5")}
             </span>{" "}
-            adaptada a tu{" "}
+            {t("header.part6")}{" "}
             <span className="text-light-highlight dark:text-dark-highlight">
-              stack y habilidades y crea proyectos increibles con{" "}
+              {t("header.part7")}{" "}
               <span className="text-light-highlight dark:text-dark-highlight">
-                DevPath
+                {t("header.part8")}
               </span>
             </span>
           </h2>

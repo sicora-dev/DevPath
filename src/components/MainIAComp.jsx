@@ -10,13 +10,17 @@ import ProjectCarousel from "./ProjectCarousel";
 import ExampleProjectCarousel from "./ExampleProjectCarousel";
 import { Tooltip } from "react-tooltip";
 
+import { useTranslation } from 'react-i18next';
+
 import ReactMarkdown from "react-markdown";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import SkeletonCards from "./SkeletonCards";
 import ChatBot from "./ChatBot";
 
+
 const MainIAComp = () => {
+  const { t } = useTranslation();
   const {
     stack,
     setStack,
@@ -170,7 +174,7 @@ const MainIAComp = () => {
 
   return (
     <div
-      className={`flex flex-col items-center w-full ${
+      className={`flex flex-col items-center w-full${
         output || loading ? "" : "justify-center"
       } `}
     >
@@ -180,18 +184,18 @@ const MainIAComp = () => {
             htmlFor="stack"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
-            Stack Tecnológico
+            {t('stack')}
           </label>
           <input
             id="stack"
             type="text"
             required
             data-tooltip-id="stack-tooltip"
-            data-tooltip-content="El stack ayuda a filtrar proyectos según las tecnologías que manejas"
+            data-tooltip-content={t('stack-tooltip')}
             onChange={(e) => setStack(e.target.value)}
             value={stack}
             className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
-            placeholder="Ej: JavaScript"
+            placeholder={t('stack-placeholder')}
           />
           <Tooltip
             id="stack-tooltip"
@@ -210,14 +214,14 @@ const MainIAComp = () => {
               className="p-2 text-light-highlight dark:text-dark-highlight font-bold"
               htmlFor="strict-switch"
             >
-              Modo estricto
+              {t('strict')}
             </label>
             <Switch
               id="strict-switch"
               isSelected={restricted}
               onValueChange={() => setRestricted(!restricted)}
               data-tooltip-id="strict-tooltip"
-              data-tooltip-content="En modo estricto, la IA solo sugerirá proyectos con las tecnologías del stack. Siempre que sea posible"
+              data-tooltip-content={t('strict-tooltip')}
               color="success"
               className="w-full justify-center z-0 "
             ></Switch>
@@ -239,19 +243,19 @@ const MainIAComp = () => {
             htmlFor="skill"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
-            Habilidad
+            {t('skill')}
           </label>
           <input
             id="skill"
             type="text"
             title="" // evita el tooltip nativo
             data-tooltip-id="skill-tooltip"
-            data-tooltip-content="La habilidad le sirve a la IA a sugerir proyectos más acordes a tu nivel"
+            data-tooltip-content={t('skill-tooltip')}
             required
             onChange={(e) => setSkill(e.target.value)}
             className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             value={skill}
-            placeholder="Ej: JavaScript-Medio"
+            placeholder={t('skill-placeholder')}
           ></input>
           <Tooltip
             id="skill-tooltip"
@@ -269,20 +273,20 @@ const MainIAComp = () => {
             htmlFor="observations"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
-            Observaciones
+            {t('observations')}
           </label>
           <input
             id="observations"
             type="text"
-            data-tooltip-id="obervations-tooltip"
-            data-tooltip-content="Las observaciones ayudan a la IA a personalizar mejor las sugerencias"
+            data-tooltip-id="observations-tooltip"
+            data-tooltip-content={t('observations-tooltip')}
             onChange={(e) => setObservations(e.target.value)}
             className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             value={observations}
-            placeholder="Ej: Proyectos cortos"
+            placeholder={t('observations-placeholder')}
           ></input>
           <Tooltip
-            id="obervations-tooltip"
+            id="observations-tooltip"
             className="peer-focus:hidden"
             style={{
               backgroundColor: "#333",
@@ -299,7 +303,7 @@ const MainIAComp = () => {
             className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2 disabled:bg-light-secondary dark:disabled:bg-dark-secondary disabled:cursor-not-allowed focus:bg-light-secondary dark:focus:bg-dark-secondary focus:outline-none"
             disabled={loading}
           >
-            Enviar
+            {t('send-button')}
           </button>
         </form>
       )}

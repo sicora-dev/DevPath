@@ -5,7 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 const App = () => {
   return (
     <ErrorBoundary>
-      <div className="min-h-[100vh]">
+      <div className="min-h-[100vh] pb-[40px]">
         <ErrorBoundary>
           <Header />
         </ErrorBoundary>

@@ -11,8 +11,10 @@ import { useCallback, useContext, useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { ShowMoreicon } from "../showmorebutton/ShowMoreIcon";
 import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
 
 const ProjectCarousel = ({ projects }) => {
+  const { t } = useTranslation();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, jump: true });
   const [showMore, setShowMore] = useState(false);
   const { 
@@ -98,7 +100,7 @@ const ProjectCarousel = ({ projects }) => {
                 >
                   <div>
                     <h4 className="font-semibold mb-2 text-center">
-                      📝Descripción📝
+                      📝{t('description')}📝
                     </h4>
                     <ReactMarkdown className="text-center">
                       {outputLoaded &&
@@ -107,7 +109,7 @@ const ProjectCarousel = ({ projects }) => {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2 text-center">
-                      📍Objetivos de aprendizaje📍
+                      📍{t('objectives')}📍
                     </h4>
                     <section>
                       <ul>
@@ -130,7 +132,7 @@ const ProjectCarousel = ({ projects }) => {
                   </div>
                   <div className="flex flex-col justify-evenly w-full gap-5">
                     <div className="flex flex-col items-center text-center">
-                      <h4 className="font-semibold mb-2">⌛Valor⌛</h4>
+                      <h4 className="font-semibold mb-2">⌛{t('value')}⌛</h4>
                       <section>
                         {outputLoaded &&
                           project.body.split("|||")[5].split(":")[1]}

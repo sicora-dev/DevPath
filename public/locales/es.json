@@ -1,0 +1,61 @@
+{
+  "header": {
+    "part1": "Tu",
+    "part2": "mentor personal",
+    "part3": "impulsado por",
+    "part4": "- Obtén una ruta personalizada de",
+    "part5": "5 proyectos",
+    "part6": "adaptada a tu",
+    "part7": "stack y habilidades y crea proyectos increibles con",
+    "part8": "DevPath"
+  },
+  "chat-header": {
+    "part1": "Preguntale a la",
+    "part2": "IA",
+    "part3": "sobre el"
+  },
+  "modal-title": "¿Desea recuperar el chat anterior o iniciar uno nuevo?",
+  "modal-recover": "Recuperar",
+  "modal-new": "Nuevo chat",
+  "stack": "Stack Tecnológico",
+  "stack-placeholder": "Ej: JavaScript",
+  "stack-tooltip": "El stack ayuda a filtrar proyectos según las tecnologías que manejas",
+  "strict": "Modo estricto",
+  "strict-tooltip": "En modo estricto, la IA solo sugerirá proyectos con las tecnologías del stack. Siempre que sea posible",
+  "skill": "Habilidad",
+  "skill-placeholder": "Ej: JavaScript - Medio",
+  "skill-tooltip": "La habilidad le sirve a la IA a sugerir proyectos más acordes a tu nivel",
+  "observations": "Observaciones",
+  "observations-placeholder": "Ej: Proyectos cortos",
+  "observations-tooltip": "Las observaciones ayudan a la IA a personalizar mejor las sugerencias",
+  "send-button": "Enviar",
+  "example-projects": "Proyectos de ejemplo:",
+  "chat-tooltip": "Chatea con la IA sobre este proyecto",
+  "visible-placeholder": "Haz click fuera para esconder",
+  "hidden-placeholder": "Click o arrastra para mostrar",
+  "description" : "Descripción",
+  "objectives" : "Objetivos de aprendizaje",
+  "value" : "Valor",
+  "projects": [
+    {
+      "title": "Proyecto 1: Calculadora Básica",
+      "body": "|||\n- Descripción: Una calculadora simple que realiza operaciones aritméticas básicas (suma, resta, multiplicación, división).\n|||\n- Objetivos de aprendizaje:\n    - Familiarización con la sintaxis básica de Python.\n    - Uso de variables, operadores y funciones.\n    - Entrada y salida de datos por consola.\n|||\n- ⏱️ Tiempo estimado: 2-3 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra comprensión de conceptos básicos de programación y capacidad para resolver problemas sencillos.\n|||\n- ⚡ Dificultad: 4/10"
+    },
+    {
+      "title": "Proyecto 2: Juego de Adivinar el Número",
+      "body": "|||\n- Descripción: Un juego donde el usuario debe adivinar un número aleatorio generado por la computadora, con pistas sobre si el número es mayor o menor.\n|||\n- Objetivos de aprendizaje:\n    - Generación de números aleatorios.\n    - Uso de bucles y condicionales.\n    - Creación de una interfaz de usuario simple por consola.\n|||\n- ⏱️ Tiempo estimado: 3-4 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra comprensión de lógica de programación, control de flujo y manejo de entrada del usuario.\n|||\n- ⚡ Dificultad: 5/10"
+    },
+    {
+      "title": "Proyecto 3: Lista de Tareas",
+      "body": "|||\n- Descripción: Una aplicación que permite al usuario agregar, eliminar y marcar como completadas tareas en una lista. La información se guarda en un archivo de texto.\n|||\n- Objetivos de aprendizaje:\n    - Manejo de archivos de texto.\n    - Uso de listas y estructuras de datos.\n    - Implementación de funciones para gestionar la lista de tareas.\n|||\n- ⏱️ Tiempo estimado: 5-7 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra capacidad para gestionar datos, organizar código y crear una aplicación funcional, aunque simple.\n|||\n- ⚡ Dificultad: 6/10"
+    },
+    {
+      "title": "Proyecto 4: Conversor de Unidades",
+      "body": "|||\n- Descripción: Un conversor que permite convertir entre diferentes unidades de medida (ej: Celsius a Fahrenheit, metros a pulgadas).\n|||\n- Objetivos de aprendizaje:\n    - Creación de funciones con parámetros y valores de retorno.\n    - Manejo de excepciones.\n    - Diseño de una interfaz de usuario más robusta.\n|||\n- ⏱️ Tiempo estimado: 7-10 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra capacidad para diseñar una aplicación modular, manejando diferentes tipos de datos y posibles errores.\n|||\n- ⚡ Dificultad: 7/10"
+    },
+    {
+      "title": "Proyecto 5: Aplicación de Gestión de Libros",
+      "body": "|||\n- Descripción: Una aplicación sencilla para gestionar una biblioteca personal, permitiendo agregar, eliminar, buscar y listar libros con título, autor e ISBN. Los datos se almacenan en un archivo (ej: CSV o JSON).\n|||\n- Objetivos de aprendizaje:\n    - Trabajo con bases de datos sencillas (archivos CSV o JSON).\n    - Organización del código en módulos o clases (introducción a la programación orientada a objetos).\n    - Manejo de datos estructurados.\n|||\n- ⏱️ Tiempo estimado: 10-14 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra la capacidad para gestionar un proyecto más complejo, incluyendo el diseño, la implementación y el manejo de datos persistentes.\n|||\n- ⚡ Dificultad: 8/10"
+    }
+  ]
+}
