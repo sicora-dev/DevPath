@@ -90,9 +90,9 @@ const Header = () => {
           <Dropdown>
             <DropdownTrigger>
               <Button variant="light" className="bg-transparent hover:bg-transparent w-fit ">
-              <Avatar className={`${i18n.language === "en" ? "visible" : "hidden"} bg-transparent`} size="sm" radius="md" src="https://www.svgrepo.com/show/508567/flag-lr.svg" />
+              <Avatar className={`${i18n.language.includes("en") ? "visible" : "hidden"} bg-transparent`} size="sm" radius="md" src="https://www.svgrepo.com/show/508567/flag-lr.svg" />
 
-              <Avatar className={`${i18n.language === "es" ? "visible" : "hidden"} bg-transparent`} size="sm" radius="md" src="https://www.svgrepo.com/show/508499/flag-es.svg" />
+              <Avatar className={`${i18n.language.includes("es") ? "visible" : "hidden"} bg-transparent`} size="sm" radius="md" src="https://www.svgrepo.com/show/508499/flag-es.svg" />
               </Button>
             </DropdownTrigger>
             <DropdownMenu
