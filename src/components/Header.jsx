@@ -1,13 +1,21 @@
 import { useEffect, useState, useContext } from "react";
 import { GithubIcon } from "../githubbutton/GithubIcon";
-import {Switch} from "@nextui-org/react";
+import {
+  Switch,
+  Dropdown,
+  Avatar,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "@nextui-org/react";
 import { MoonIcon } from "../switch/MoonIcon";
 import { SunIcon } from "../switch/SunIcon";
 import { Context } from "../context/Context";
 import { useTranslation } from "react-i18next";
 
 const Header = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { selectedProject } = useContext(Context);
 
   const [darkMode, setDarkMode] = useState(
@@ -17,6 +25,10 @@ const Header = () => {
 
   const handleGithubClick = () => {
     window.open("https://github.com/sicora-dev/DevPath", "_blank");
+  };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
   };
 
   useEffect(() => {
@@ -51,9 +63,10 @@ const Header = () => {
     `}
       >
         <h1 className="font-bold text-center font-title text-light-heading dark:text-dark-heading">
-          DevPath (v2.1)
+          DevPath (v2.2)
         </h1>
         <section className="flex gap-5">
+          
           <button
             onClick={() => handleGithubClick()}
             className="rounded-xl p-2 border-light-highlight/30 dark:border-dark-highlight/30 border-2 hover:border-light-highlight
@@ -74,12 +87,27 @@ const Header = () => {
             }
             onClick={() => setDarkMode(!darkMode)}
           ></Switch>
-          
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="light" className="bg-transparent hover:bg-transparent w-fit ">
+              <Avatar className={`${i18n.language === "en" ? "visible" : "hidden"} bg-transparent`} size="sm" radius="md" src="https://www.svgrepo.com/show/508567/flag-lr.svg" />
+
+              <Avatar className={`${i18n.language === "es" ? "visible" : "hidden"} bg-transparent`} size="sm" radius="md" src="https://www.svgrepo.com/show/508499/flag-es.svg" />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Language Selection"
+              onAction={(key) => changeLanguage(key)}
+            >
+              <DropdownItem startContent={<Avatar className={`bg-transparent w-5 h-5`} size="sm" radius="md" src="https://www.svgrepo.com/show/508567/flag-lr.svg" />} key="en">English</DropdownItem>
+              <DropdownItem startContent={<Avatar className={`bg-transparent w-5 h-5`} size="sm" radius="md" src="https://www.svgrepo.com/show/508499/flag-es.svg" />} key="es">Español</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </section>
       </nav>
       {!selectedProject && (
         <main className="flex flex-col items-center py-5 px-1 my-5">
-           <h2 className="w-[70%] text-xl text-center mt-2 font-semibold">
+          <h2 className="w-[70%] text-xl text-center mt-2 font-semibold">
             {t("header.part1")}{" "}
             <span className="text-light-highlight dark:text-dark-highlight">
               {t("header.part2")}

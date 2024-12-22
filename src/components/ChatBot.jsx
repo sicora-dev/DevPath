@@ -4,10 +4,8 @@ import Modal from "./Modal";
 import Typewriter from "./Typewriter";
 import "../styles/chatbot.css";
 import ChatMessage from "./ChatMessage";
-import { useTranslation } from "react-i18next";
 
 const ChatBot = () => {
-  const { t } = useTranslation();
   const {
     history,
     setHistory,
@@ -136,7 +134,7 @@ const ChatBot = () => {
       {showModal && (
         <Modal>
           <h2 className="text-xl font-bold mb-4">
-            {t("modal-title")}
+            ¿Desea recuperar el chat anterior o iniciar uno nuevo?
           </h2>
           <div className="flex space-x-4">
             <button
@@ -147,7 +145,7 @@ const ChatBot = () => {
             </button>
             <button
               onClick={handleNewChat}
-              className="bg-light-background dark:bg-dark-background hover:bg-light-secondary/30 hover:dark:bg-dark-background/30 px-4 py-2 rounded-md"
+              className="bg-light-background dark:bg-dark-background hover:bg-light-secondary/30 hover:dark:bg-dark-background/30 text-white px-4 py-2 rounded-md"
             >
               Nuevo chat
             </button>
@@ -191,9 +189,9 @@ const ChatBot = () => {
         <div className="w-full">
           <h1 className="w-full text-md font-title text-xl rounded-md py-1 px-2 bg-light-secondary dark:bg-dark-secondary">
             <span className="hidden lg:inline-block">
-              {t("chat-header.part1")}{" "}
+              Preguntale a la{" "}
               <span className="text-light-highlight dark:text-dark-highlight inline-block">
-              {t("chat-header.part2")}{" "}
+                IA{" "}
                 <svg
                   width="20px"
                   height="20px"
@@ -211,7 +209,7 @@ const ChatBot = () => {
                   />
                 </svg>
               </span>{" "}
-              {t("chat-header.part3")}{" "}
+              sobre el{" "}
             </span>
             <span className="text-light-heading  lg:inline-block hidden ml-2">
               {outputSections.projects[
@@ -291,7 +289,7 @@ const ChatBot = () => {
         >
           <div className="flex justify-start">
             <button
-              aria-label="Clear chat history"
+              aria-label="Limpiar historial de chat"
               onClick={(e) => {
                 e.preventDefault();
                 setHistory([]);
@@ -333,8 +331,8 @@ const ChatBot = () => {
               value={input}
               placeholder={`${
                 showTextarea
-                  ? t("visible-placeholder")
-                  : t("hidden-placeholder")
+                  ? "Haz click fuera para esconder"
+                  : "Click o arrastra para mostrar"
               }`}
               onChange={(e) => {
                 setInput(e.target.value);
@@ -356,7 +354,7 @@ const ChatBot = () => {
 
           <div className="flex justify-start">
             <button
-              aria-label="Send message"
+              aria-label="Enviar mensaje"
               type="submit"
               className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md hover:bg-light-secondary dark:hover:bg-dark-secondary transition ease-in-out disabled:bg-light-secondary disabled:dark:bg-dark-secondary"
               disabled={loadingChat}
