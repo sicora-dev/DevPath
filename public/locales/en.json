@@ -30,6 +30,8 @@
   "observations-placeholder": "E.g.: Short projects",
   "observations-tooltip": "Observations help the AI better personalize suggestions",
   "send-button": "Send",
+  "upload-pdf": "Upload CV",
+  "cv-upload-tooltip": "Upload your CV and fill in the fields automatically",
   "example-projects": "Example projects:",
   "chat-tooltip": "Chat with the AI about this project",
   "visible-placeholder": "Click outside to hide",

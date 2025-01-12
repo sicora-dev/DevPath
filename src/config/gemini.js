@@ -66,6 +66,38 @@ async function runChat(history, userInput, project) {
   return response;
 }
 
+async function autocomplete(pdfContent) {
+  const language = i18n.language || "en";
+  const chatSession = model.startChat({
+    chatbotConfig,
+    history: [],
+  });
+  const prompt = `You are TechMentor, an experienced software engineering coach.
+  Provide all responses in ${language}.
+
+  Context:
+  - User input: ${pdfContent || "No input"}
+
+  Your role:
+  As a mentor, analyze the provided CV to extract:
+  - The developer's tech stack
+  - The developer's skill level for each technology
+  - The developer's information that could be relevant to suggest projects
+
+  Provide the tech stack, skill levels, and observations separated by a semicolon (|).
+
+  Response Template:
+  [Tech Stack]|[Skill Levels]|[Observations]
+  
+  Remember:
+  - Stick to the template`
+  ;
+
+  const result = await chatSession.sendMessage(prompt);
+  const response = await result.response.text();
+  return response;
+}
+
 async function run(stack, skill, observations, restricted) {
   const language = i18n.language || "en";
   const chatSession = model.startChat({
@@ -333,4 +365,4 @@ async function run(stack, skill, observations, restricted) {
   return result.response.text();
 }
 
-export { run, runChat };
+export { run, runChat, autocomplete };

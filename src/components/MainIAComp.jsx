@@ -10,14 +10,16 @@ import ProjectCarousel from "./ProjectCarousel";
 import ExampleProjectCarousel from "./ExampleProjectCarousel";
 import { Tooltip } from "react-tooltip";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 import ReactMarkdown from "react-markdown";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import SkeletonCards from "./SkeletonCards";
 import ChatBot from "./ChatBot";
+import * as pdfjsLib from 'pdfjs-dist';
 
+pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.mjs`;
 
 const MainIAComp = () => {
   const { t } = useTranslation();
@@ -36,9 +38,32 @@ const MainIAComp = () => {
     setOutputSections,
     setOutputLoaded,
     onSent,
+    onPDFUploaded,
   } = useContext(Context);
 
   const [restricted, setRestricted] = useState(false);
+ 
+
+  const handlePDFUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const typedArray = new Uint8Array(e.target.result);
+        const pdf = await pdfjsLib.getDocument(typedArray).promise;
+        let text = '';
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          const pageText = content.items.map(item => item.str).join(' ');
+          text += pageText + '\n';
+        }
+        onPDFUploaded(text); // Aquí tienes el texto extraído del PDF
+        // Puedes procesar el texto extraído según tus necesidades
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
 
   const extractSection = (output, startTag, endTag) => {
     const text = Array.isArray(output) ? output.join("") : output;
@@ -113,6 +138,8 @@ const MainIAComp = () => {
     }
   };
 
+  
+
   useEffect(() => {
     const savedOutput = sessionStorage.getItem("output");
     if (savedOutput && !output) {
@@ -184,18 +211,18 @@ const MainIAComp = () => {
             htmlFor="stack"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
-            {t('stack')}
+            {t("stack")}
           </label>
           <input
             id="stack"
             type="text"
             required
             data-tooltip-id="stack-tooltip"
-            data-tooltip-content={t('stack-tooltip')}
+            data-tooltip-content={t("stack-tooltip")}
             onChange={(e) => setStack(e.target.value)}
             value={stack}
             className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
-            placeholder={t('stack-placeholder')}
+            placeholder={t("stack-placeholder")}
           />
           <Tooltip
             id="stack-tooltip"
@@ -214,14 +241,14 @@ const MainIAComp = () => {
               className="p-2 text-light-highlight dark:text-dark-highlight font-bold"
               htmlFor="strict-switch"
             >
-              {t('strict')}
+              {t("strict")}
             </label>
             <Switch
               id="strict-switch"
               isSelected={restricted}
               onValueChange={() => setRestricted(!restricted)}
               data-tooltip-id="strict-tooltip"
-              data-tooltip-content={t('strict-tooltip')}
+              data-tooltip-content={t("strict-tooltip")}
               color="success"
               className="w-full justify-center z-0 "
             ></Switch>
@@ -243,19 +270,19 @@ const MainIAComp = () => {
             htmlFor="skill"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
-            {t('skill')}
+            {t("skill")}
           </label>
           <input
             id="skill"
             type="text"
             title="" // evita el tooltip nativo
             data-tooltip-id="skill-tooltip"
-            data-tooltip-content={t('skill-tooltip')}
+            data-tooltip-content={t("skill-tooltip")}
             required
             onChange={(e) => setSkill(e.target.value)}
             className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             value={skill}
-            placeholder={t('skill-placeholder')}
+            placeholder={t("skill-placeholder")}
           ></input>
           <Tooltip
             id="skill-tooltip"
@@ -273,17 +300,17 @@ const MainIAComp = () => {
             htmlFor="observations"
             className="text-center text-light-highlight dark:text-dark-highlight font-bold"
           >
-            {t('observations')}
+            {t("observations")}
           </label>
           <input
             id="observations"
             type="text"
             data-tooltip-id="observations-tooltip"
-            data-tooltip-content={t('observations-tooltip')}
+            data-tooltip-content={t("observations-tooltip")}
             onChange={(e) => setObservations(e.target.value)}
             className="rounded-md p-2 m-2 bg-light-secondary dark:bg-dark-secondary peer focus:outline outline-light-highlight"
             value={observations}
-            placeholder={t('observations-placeholder')}
+            placeholder={t("observations-placeholder")}
           ></input>
           <Tooltip
             id="observations-tooltip"
@@ -298,13 +325,44 @@ const MainIAComp = () => {
             }}
           />
           <button
-            aria-label="Enviar"
+            aria-label={t("send-button")}
             type="submit"
-            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2 disabled:bg-light-secondary dark:disabled:bg-dark-secondary disabled:cursor-not-allowed focus:bg-light-secondary dark:focus:bg-dark-secondary focus:outline-none"
+            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2 disabled:bg-light-secondary dark:disabled:bg-dark-secondary disabled:cursor-not-allowed focus:bg-light-secondary dark:focus:bg-dark-secondary"
             disabled={loading}
           >
-            {t('send-button')}
+            {t("send-button")}
           </button>
+          <label
+            htmlFor="cv-upload"
+            className="text-center text-light-highlight dark:text-dark-highlight font-bold"
+            data-tooltip-id="cv-upload-tooltip"
+            data-tooltip-content={t("cv-upload-tooltip")}
+          >
+            {t("upload-pdf")}
+          </label>
+          <Tooltip
+            id="cv-upload-tooltip"
+            className="peer-focus:hidden"
+            style={{
+              backgroundColor: "#333",
+              color: "white",
+              borderRadius: "6px",
+              padding: "10px",
+              fontSize: "14px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+            }}
+          />
+          <input
+            id="cv-upload"
+            aria-label={t("upload-pdf")}
+            type="file"
+            accept="application/pdf"
+            name="cv"
+            className="px-2 py-1 bg-light-highlight dark:bg-dark-highlight rounded-md m-2 disabled:bg-light-secondary dark:disabled:bg-dark-secondary disabled:cursor-not-allowed focus:bg-light-secondary dark:focus:bg-dark-secondary focus:outline-none file:rounded-md file:border-transparent file:bg-light-secondary file:dark:bg-dark-secondary file:text-light"
+            disabled={loading}
+            onChange={handlePDFUpload}
+          />
+          
         </form>
       )}
       {!selectedProject && (
