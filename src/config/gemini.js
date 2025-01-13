@@ -84,13 +84,17 @@ async function autocomplete(pdfContent) {
   - The developer's skill level for each technology
   - The developer's information that could be relevant to suggest projects
 
+  If the CV is not related to IT, software development, or similar fields, or if it is not a CV at all, return ONLY "not-cv".
+
   Provide the tech stack, skill levels, and observations separated by a semicolon (|).
 
   Response Template:
   [Tech Stack]|[Skill Levels]|[Observations]
   
   Remember:
-  - Stick to the template`
+  - Stick to the template
+  - If not a CV, return "not-cv" only
+  `
   ;
 
   const result = await chatSession.sendMessage(prompt);

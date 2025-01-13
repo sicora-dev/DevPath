@@ -1,12 +1,15 @@
 import { useState, createContext } from "react";
 import { run, runChat, autocomplete } from "../config/gemini.js";
+import { useTranslation } from "react-i18next";
 
 export const Context = createContext();
 
 const ContextProvider = (props) => {
+  const { t } = useTranslation();
   const [stack, setStack] = useState("");
   const [skill, setSkill] = useState("");
   const [observations, setObservations] = useState("");
+  const [cvError, setCvError] = useState("");
   const [input, setInput] = useState("");
   const [history, setHistory] = useState([]);
   const [selectedProject, setSelectedProject] = useState("");
@@ -104,23 +107,27 @@ const ContextProvider = (props) => {
 
   const onPDFUploaded = async (pdfContent) => {
     setLoading(true);
+    setCvError(null)
     try {
-      const result = await autocomplete(
-        pdfContent
-      );
-
-      setStack(result.split('|')[0])
-      setSkill(result.split('|')[1])
-      setObservations(result.split('|')[2])
-      console.log("procesado")
-
-      
+      const result = await autocomplete(pdfContent);
+      console.log(result)
+      if (result.trim() === "not-cv") {
+        setStack("");
+        setSkill("");
+        setObservations("");
+        setCvError(t('not-cv'))
+      } else {
+        setStack(result.split("|")[0]);
+        setSkill(result.split("|")[1]);
+        setObservations(result.split("|")[2]);
+        setCvError(null)
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const contextValue = {
     stack,
@@ -129,6 +136,7 @@ const ContextProvider = (props) => {
     setSkill,
     observations,
     setObservations,
+    cvError,
     history,
     setHistory,
     selectedProject,
@@ -153,7 +161,7 @@ const ContextProvider = (props) => {
     setChatBotOutput,
     onSent,
     onChatbotSent,
-    onPDFUploaded
+    onPDFUploaded,
   };
 
   return (
