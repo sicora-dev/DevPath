@@ -62,4 +62,5 @@
       "body": "|||\n- Descripción: Una aplicación sencilla para gestionar una biblioteca personal, permitiendo agregar, eliminar, buscar y listar libros con título, autor e ISBN. Los datos se almacenan en un archivo (ej: CSV o JSON).\n|||\n- Objetivos de aprendizaje:\n    - Trabajo con bases de datos sencillas (archivos CSV o JSON).\n    - Organización del código en módulos o clases (introducción a la programación orientada a objetos).\n    - Manejo de datos estructurados.\n|||\n- ⏱️ Tiempo estimado: 10-14 días\n|||\n- 🛠️ Tecnologías: Python\n|||\n- 💡 Valor profesional: Demuestra la capacidad para gestionar un proyecto más complejo, incluyendo el diseño, la implementación y el manejo de datos persistentes.\n|||\n- ⚡ Dificultad: 8/10"
     }
   ]
+  
 }

@@ -4,8 +4,10 @@ import Modal from "./Modal";
 import Typewriter from "./Typewriter";
 import "../styles/chatbot.css";
 import ChatMessage from "./ChatMessage";
+import { useTranslation } from "react-i18next";
 
 const ChatBot = () => {
+  const { t } = useTranslation();
   const {
     history,
     setHistory,
@@ -53,7 +55,6 @@ const ChatBot = () => {
       for (let i = 0; i < links.length; i++) {
         links[i].target = "_blank";
       }
-      console.log("Links updated with target='_blank'");
     };
 
     updateLinks();
@@ -134,20 +135,20 @@ const ChatBot = () => {
       {showModal && (
         <Modal>
           <h2 className="text-xl font-bold mb-4">
-            ¿Desea recuperar el chat anterior o iniciar uno nuevo?
+          {t("modal-title")}
           </h2>
           <div className="flex space-x-4">
             <button
               onClick={handleRecoverChat}
               className="bg-light-highlight hover:bg-light-secondary/30 hover:dark:bg-dark-background/30 px-4 py-2 rounded-md"
             >
-              Recuperar
+              {t("modal-recover")}
             </button>
             <button
               onClick={handleNewChat}
               className="bg-light-background dark:bg-dark-background hover:bg-light-secondary/30 hover:dark:bg-dark-background/30 text-white px-4 py-2 rounded-md"
             >
-              Nuevo chat
+              {t("modal-new")}
             </button>
           </div>
         </Modal>
@@ -189,9 +190,9 @@ const ChatBot = () => {
         <div className="w-full">
           <h1 className="w-full text-md font-title text-xl rounded-md py-1 px-2 bg-light-secondary dark:bg-dark-secondary">
             <span className="hidden lg:inline-block">
-              Preguntale a la{" "}
+            {t("chat-header.part1")}{" "}
               <span className="text-light-highlight dark:text-dark-highlight inline-block">
-                IA{" "}
+              {t("chat-header.part2")}{" "}
                 <svg
                   width="20px"
                   height="20px"
@@ -209,7 +210,7 @@ const ChatBot = () => {
                   />
                 </svg>
               </span>{" "}
-              sobre el{" "}
+              {t("chat-header.part3")}{" "}
             </span>
             <span className="text-light-heading  lg:inline-block hidden ml-2">
               {outputSections.projects[
@@ -331,8 +332,8 @@ const ChatBot = () => {
               value={input}
               placeholder={`${
                 showTextarea
-                  ? "Haz click fuera para esconder"
-                  : "Click o arrastra para mostrar"
+                  ? t("visible-placeholder")
+                  : t("hidden-placeholder")
               }`}
               onChange={(e) => {
                 setInput(e.target.value);

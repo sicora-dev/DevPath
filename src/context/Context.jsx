@@ -110,7 +110,7 @@ const ContextProvider = (props) => {
     setCvError(null)
     try {
       const result = await autocomplete(pdfContent);
-      console.log(result)
+      
       if (result.trim() === "not-cv") {
         setStack("");
         setSkill("");

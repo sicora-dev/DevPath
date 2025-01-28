@@ -63,7 +63,7 @@ const Header = () => {
     `}
       >
         <h1 className="font-bold text-center font-title text-light-heading dark:text-dark-heading">
-          DevPath (v2.4)
+          DevPath (v2.5)
         </h1>
         <section className="flex gap-5">
           
